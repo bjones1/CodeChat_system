@@ -18,7 +18,7 @@
 # *********************************************************************
 # |docname| - Template configuration file for a Sphinx CodeChat project
 # *********************************************************************
-# 40, which transforms restructured text (reST) into
+# This file configures Sphinx, which transforms restructured text (reST) into
 # html. See Sphinx `build configuration file docs
 # <https://www.sphinx-doc.org/en/master/usage/configuration.html>`_ for more information on the settings
 # below.
@@ -285,3 +285,4 @@ html_sourcelink_suffix = ""
 # `html_file_suffix <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_file_suffix>`_:
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 ##html_file_suffix = None
+cod
