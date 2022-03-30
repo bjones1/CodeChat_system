@@ -18,7 +18,7 @@
 # *********************************************************************
 # |docname| - Template configuration file for a Sphinx CodeChat project
 # *********************************************************************
-# 40, which transforms restructured text (reST) into
+# This file configures Sphinx, which transforms restructured text (reST) into
 # html. See Sphinx `build configuration file docs
 # <https://www.sphinx-doc.org/en/master/usage/configuration.html>`_ for more information on the settings
 # below.
