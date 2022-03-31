@@ -30,13 +30,16 @@ html {
 *:after {
     box-sizing: inherit;
 }
-
+*
 body {
     /* For box model simplicity, switch the padding and margin. */
     padding: var(--body-padding);
     margin: 0px;
-    /* The default of transparent makes VS Code's black show up and confuse everything. For now, make it white. */
-    background: rgb(0, 0, 0);
+    /* This is used to change the background to a dark gray color, which closely resembles Dark mode in Visual Studio. See https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content */
+    background: rgba(29, 28, 28, 0.678);
+    /* This is used to change the text to a light gray color, which closely improves readability with the darker background. */
+    color: rgba(255, 255, 255, 0.555);
+    a {color: aliceblue;}
 }
 
 /* This div contains the splitter plus both split divs. */
