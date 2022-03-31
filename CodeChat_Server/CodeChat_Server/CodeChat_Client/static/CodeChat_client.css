@@ -36,7 +36,7 @@ body {
     padding: var(--body-padding);
     margin: 0px;
     /* The default of transparent makes VS Code's black show up and confuse everything. For now, make it white. */
-    background: white;
+    background: rgb(0, 0, 0);
 }
 
 /* This div contains the splitter plus both split divs. */
