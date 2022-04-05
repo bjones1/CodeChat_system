@@ -399,10 +399,17 @@ function parse_for_errors(errors_html) {
                 line = -1;
             }
 
-            // Create a hyperlink to navigate to the error.
-            return `<a href='javascript:navigate_to_error(${JSON.stringify(
+            // Extract the warning/error message from match_text
+            let just_text = match_text.replace(file_path, '')
+            just_text = just_text.replace(line, '')
+
+            // Delete the first 3 characters (they are always ':: ' with how the string is currently made)
+            just_text = just_text.substring(3, just_text.length)
+
+            // Display the error message and create a hyperlink to navigate to the error.
+            return `${just_text}\n<a href='javascript:navigate_to_error(${JSON.stringify(
                 file_path
-            )}, ${line})' class="error_link">${match_text}</a>`;
+            )}, ${line})' class="error_link">${file_path}\nLine: ${line}</a>`;
         }
     );
 
