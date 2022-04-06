@@ -30,16 +30,15 @@ html {
 *:after {
     box-sizing: inherit;
 }
-*
+
 body {
     /* For box model simplicity, switch the padding and margin. */
     padding: var(--body-padding);
     margin: 0px;
-    /* This is used to change the background to a dark gray color, which closely resembles Dark mode in Visual Studio. See https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content */
-    background: rgba(29, 28, 28, 0.678);
-    /* This is used to change the text to a light gray color, which closely improves readability with the darker background. */
-    color: rgba(255, 255, 255, 0.555);
-    a {color: aliceblue;}
+    /* This is used to change the background to dark gray for the darkmode. See https://code.visualstudio.com/api/extension-guides/webview#theming-webview-content */
+    background: rgba(52, 51, 51, 0.678);
+    /* This is used to change the text to a light gray color, which will contrast with the dark background but not much. */
+    color: rgba(201, 189, 189, 0.462);
 }
 
 /* This div contains the splitter plus both split divs. */
@@ -105,7 +104,7 @@ body {
 }
 
 .have_warnings {
-    background-color: sandybrown;
+    background-color: rgba(121, 2, 2, 0.562);
 }
 
 /* `Class to use <class building>` for the output iframe when a build is in progress. */
