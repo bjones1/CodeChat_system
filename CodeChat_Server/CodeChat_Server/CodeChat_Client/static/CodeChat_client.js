@@ -416,7 +416,7 @@ function parse_for_errors(errors_html) {
     // Report these results to the user.
     let span_class;
     if (errNum) {
-        span_class = "have_errors";
+        span_class = "have_errors: See Common Problems Page.";
     } else if (warningNum) {
         span_class = "have_warnings";
     } else {
