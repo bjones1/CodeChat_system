@@ -456,6 +456,11 @@ class RenderManager:
                 if pp:
                     # For projects, we need to find the source file that maps to this HTML pathname.
                     pass
+            
+            elif msg == "sync_text":
+                # If the msg passed is sync_text, print data, in which data being your text version of the html copied from window_onclick() in CodeChat_client.js
+                print(data)
+
             else:
                 print(f"Error: unknown message {msg} with data '{data}'.")
 
