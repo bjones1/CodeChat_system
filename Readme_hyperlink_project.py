@@ -197,3 +197,6 @@
         # * Create hyper link to common error page. 
         # * Update common error page with fixes. 
         # * Test out errors. 
+                # * Windows - Completed
+                # * Linx
+                # * Mac 
