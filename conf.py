@@ -225,8 +225,8 @@ exclude_patterns = [
     "CodeChat_Server/CodeChat_Server/CodeChat_Client/static/splitter.*",
 
     # Misc
-    "CodeChat_Server/venv_fedora",
-    ".venv",
+    "CodeChat_Server/codechat",
+    "codechat",
 ]
 
 
