@@ -400,11 +400,11 @@ function parse_for_errors(errors_html) {
             }
 
             // Extract the warning/error message from match_text
-            let just_text = match_text.replace(file_path, '')
-            just_text = just_text.replace(line, '')
+            let just_text = match_text.replace(file_path, "");
+            just_text = just_text.replace(line, "");
 
             // Delete the first 3 characters (they are always ':: ' with how the string is currently made)
-            just_text = just_text.substring(3, just_text.length)
+            just_text = just_text.substring(3, just_text.length);
 
             // Display the error message and create a hyperlink to navigate to the error.
             return `${just_text}\n<a href='javascript:navigate_to_error(${JSON.stringify(
@@ -416,7 +416,7 @@ function parse_for_errors(errors_html) {
     // Report these results to the user.
     let span_class;
     if (errNum) {
-        span_class = "have_errors: See Common Problems Page.";
+        span_class = "have_errors";
     } else if (warningNum) {
         span_class = "have_warnings";
     } else {
