@@ -198,5 +198,5 @@
         # * Update common error page with fixes. 
         # * Test out errors. 
                 # * Windows - Completed
-                # * Linx
+                # * Linux - tested- hyperlink doesn't go anywhere but does give a number to where the error is at.
                 # * Mac 
