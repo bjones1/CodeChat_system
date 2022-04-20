@@ -25,20 +25,27 @@ https://github.com/bjones1/CodeChat_system/issues/24
 # Steps
 
 Our main priority is fixing the html error in the window_onclick() function.
+Our Secondary Objective is to scroll the code window (by random amounts) on any click on the html
 
 # Tests
-
+- Get window_conclick to proceed without errors
+- Get render_manager.py to recognize click and scroll the window
 
 # Goals
 
 **Implement sync between text and rendered code.**
-
+    
 Sync functionality for the CodeChat system in Visual Studio Code.
 Feature will allow the user to click parts of the HTML window and be taken to that section of code.
 
 ## Scrum 1
 
-Confer with Dr. Jones, Zach, and Austin regarding status of code and trying to understand how to proceed with fixing the window_onclick() issue.
+**Confer with Dr. Jones, Zach, and Austin on:**
+- status of code
+- how to proceed with fixing the window_onclick() issue.
+- How to make codechat operate off of our changes
+- How to make vscode codechat push to a browser
 
 ## Scrum 2
-
+- Get ``CodeChat_client.js`` to recognize click on html
+- Get ``render_manager.py`` to react to ``CodeChat_client.js``'s recognition of click

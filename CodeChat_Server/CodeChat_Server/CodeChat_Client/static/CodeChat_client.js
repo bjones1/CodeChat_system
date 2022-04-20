@@ -448,7 +448,7 @@ function getHighlight(){
 // had no effect.
 window_onclick = function (file_path, line) {
     
-        //Clear the current highlight -- it doesn't make sense to have other
+        // Clear the current highlight -- it doesn't make sense to have other
         // text highlighted after a click.    
         clearHighlight();
     
