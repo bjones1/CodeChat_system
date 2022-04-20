@@ -457,7 +457,7 @@ class RenderManager:
                     # For projects, we need to find the source file that maps to this HTML pathname.
                     pass
             
-            elif msg == "sync_text":
+            elif msg == "coordinates":
                 # If the msg passed is sync_text, print data, in which data being your text version of the html copied from window_onclick() in CodeChat_client.js
                 print(data)
 
