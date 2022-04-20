@@ -103,7 +103,7 @@ body {
 }
 
 .have_warnings {
-    background-color: rgba(121, 2, 2, 0.562);
+    background-color: sandybrown;
 }
 
 /* `Class to use <class building>` for the output iframe when a build is in progress. */

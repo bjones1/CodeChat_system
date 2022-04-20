@@ -402,7 +402,7 @@ function parse_for_errors(errors_html) {
             // Create a hyperlink to navigate to the error.
             return `<a href='javascript:navigate_to_error(${JSON.stringify(
                 file_path
-            )}, ${line})' class="error_link">${match_text}</a>`;
+            )}, ${line})' style = "color: #1f85ff" class="error_link">${file_path}\nLine: ${line}</a>`;
         }
     );
 
