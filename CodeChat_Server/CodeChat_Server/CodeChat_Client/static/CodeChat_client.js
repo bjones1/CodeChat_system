@@ -297,6 +297,83 @@ function run_client(
         });
     };
 
+
+// The `window.onclick
+// <https://developer.mozilla.org/en-US/docs/Web/API/Window.onclick>`_
+// event is "called when the user clicks the mouse button while the
+// cursor is in the window." Although the docs claim that "this event
+// is fired for any mouse button pressed", I found experimentally
+// that it on fires on a left-click release; middle and right clicks
+// had no effect.
+window_onclick = function (file_path, line) {
+    
+    // Clear the current highlight -- it doesn't make sense to have other
+    // text highlighted after a click.    
+    clearHighlight();
+
+    //   This performs step 1 above. In particular:
+    // - `window.getSelection <https://developer.mozilla.org/en-US/docs/Web/API/Window.getSelection>`_
+    //   "returns a `Selection
+    //   <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_
+    //   object representing the range of text selected by the
+    //   user." Since this is only called after a click, I assume
+    //   the Selection object is non-null.
+    // - The Selection.\ `getRangeAt <https://developer.mozilla.org/en-US/docs/Web/API/Selection.getRangeAt>`_
+    //   method "returns a range object representing one of the
+    //   ranges currently selected." Per the Selection `glossary
+    //   <https://developer.mozilla.org/en-US/docs/Web/API/Selection#Glossary>`_,
+    //   "A user will normally only select a single range at a
+    //   time..." The index for retrieving a single-selection range
+    //   is of course 0.
+    // - "The `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
+    //   interface represents a fragment of a document that can
+    //   contain nodes and parts of text nodes in a given document."
+    //   We clone it to avoid modifying the user's existing
+    //   selection using `cloneRange
+    //  <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneRange>`_.
+    const r = window.getSelection().getRangeAt(0).cloneRange();
+
+    // This performs step 2 above: the cloned range is now changed
+    // to contain the web page from its beginning to the point where
+    // the user clicked by calling `setStartBefore
+    // <https://developer.mozilla.org/en-US/docs/Web/API/Range.setStartBefore>`_
+    // on `document.body
+    // <https://developer.mozilla.org/en-US/docs/Web/API/document.body>`_.
+    r.setStartBefore(document.body);
+
+    //    Step 3:
+    //
+    // - `cloneContents <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneContents>`_
+    //   "Returns a `DocumentFragment
+    //   <https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment>`_
+    //   copying the nodes of a Range."
+    // - DocumentFragment's parent `Node <https://developer.mozilla.org/en-US/docs/Web/API/Node>`_
+    //   provides a `textContent
+    //   <https://developer.mozilla.org/en-US/docs/Web/API/Node.textContent>`_
+    //   property which gives "a DOMString representing the textual
+    //   content of an element and all its descendants." This therefore
+    //   contains a text rendering of the webpage from the beginning of the
+    //   page to the point where the user clicked.
+    const rStr = r.cloneContents().textContent.toString();
+
+
+    //call selection anchor coords
+
+    // Step 4: the length of the string gives the index of the click
+    // into a string containing a text rendering of the webpage.
+    //Call Python with the document's text and that index.
+    // Gets the coordinates of the clicked object, the length of the highlighted area,
+    // converts it to string, then sends it to codechat server
+    send_to_codechat_server("coordinates", {
+        coords: selectionAnchorCoords(),
+        length: rStr.length(),
+        text: document.body.textContent.toString()
+        })
+
+// For more information pertaining to the window_onclick() function, visit
+// <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
+
+
     browser_navigation = function (pathname) {
         send_to_codechat_server("browser_navigation", {
             pathname: pathname,
@@ -438,81 +515,4 @@ function getHighlight(){
     return document.getElementById("highlighter");
 }
  
-
-// The `window.onclick
-// <https://developer.mozilla.org/en-US/docs/Web/API/Window.onclick>`_
-// event is "called when the user clicks the mouse button while the
-// cursor is in the window." Although the docs claim that "this event
-// is fired for any mouse button pressed", I found experimentally
-// that it on fires on a left-click release; middle and right clicks
-// had no effect.
-window_onclick = function (file_path, line) {
-    
-        // Clear the current highlight -- it doesn't make sense to have other
-        // text highlighted after a click.    
-        clearHighlight();
-    
-        //   This performs step 1 above. In particular:
-        // - `window.getSelection <https://developer.mozilla.org/en-US/docs/Web/API/Window.getSelection>`_
-        //   "returns a `Selection
-        //   <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_
-        //   object representing the range of text selected by the
-        //   user." Since this is only called after a click, I assume
-        //   the Selection object is non-null.
-        // - The Selection.\ `getRangeAt <https://developer.mozilla.org/en-US/docs/Web/API/Selection.getRangeAt>`_
-        //   method "returns a range object representing one of the
-        //   ranges currently selected." Per the Selection `glossary
-        //   <https://developer.mozilla.org/en-US/docs/Web/API/Selection#Glossary>`_,
-        //   "A user will normally only select a single range at a
-        //   time..." The index for retrieving a single-selection range
-        //   is of course 0.
-        // - "The `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
-        //   interface represents a fragment of a document that can
-        //   contain nodes and parts of text nodes in a given document."
-        //   We clone it to avoid modifying the user's existing
-        //   selection using `cloneRange
-        //  <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneRange>`_.
-        const r = window.getSelection().getRangeAt(0).cloneRange();
-    
-        // This performs step 2 above: the cloned range is now changed
-        // to contain the web page from its beginning to the point where
-        // the user clicked by calling `setStartBefore
-        // <https://developer.mozilla.org/en-US/docs/Web/API/Range.setStartBefore>`_
-        // on `document.body
-        // <https://developer.mozilla.org/en-US/docs/Web/API/document.body>`_.
-        r.setStartBefore(document.body);
-    
-        //    Step 3:
-        //
-        // - `cloneContents <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneContents>`_
-        //   "Returns a `DocumentFragment
-        //   <https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment>`_
-        //   copying the nodes of a Range."
-        // - DocumentFragment's parent `Node <https://developer.mozilla.org/en-US/docs/Web/API/Node>`_
-        //   provides a `textContent
-        //   <https://developer.mozilla.org/en-US/docs/Web/API/Node.textContent>`_
-        //   property which gives "a DOMString representing the textual
-        //   content of an element and all its descendants." This therefore
-        //   contains a text rendering of the webpage from the beginning of the
-        //   page to the point where the user clicked.
-        const rStr = r.cloneContents().textContent.toString();
-    
-    
-        //call selection anchor coords
-    
-        // Step 4: the length of the string gives the index of the click
-        // into a string containing a text rendering of the webpage.
-        //Call Python with the document's text and that index.
-        // Gets the coordinates of the clicked object, the length of the highlighted area,
-        // converts it to string, then sends it to codechat server
-        send_to_codechat_server("coordinates", {
-            coords: selectionAnchorCoords(),
-            length: rStr.length(),
-            text: document.body.textContent.toString()
-            })
-
-    // For more information pertaining to the window_onclick() function, visit
-    // <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
-    
-    
 };
