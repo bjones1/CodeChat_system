@@ -63,13 +63,15 @@
 #
 # Windows:
         # * Open a terminal window and activate your virtual environment.
-                # * Command should be “codechat\Scripts\activate” then press enter
+                # * In Windows - command should be “codechat\Scripts\activate” then press enter
+                # * In Ubuntu  - command should be "source codechat\bin\activate" then press enter 
                 # * Then in the same command window “pip install myst_parser”
 # **Reinstalling CodeChat Server**
 #
 # First check where the CodeChat server is. (the one that runs in VSCode aka the one your virtual environment uses)
         # * To do this, activate your virtual environment
-                # * Open command prompt and type “codechat\Scripts\activate”
+                # * In Windows - command should be “codechat\Scripts\activate” then press enter
+                # * In Ubuntu  - command should be "source codechat\bin\activate" then press enter 
         # * Then find your installation by typing “pip show codechat_server”
                 # * Under Location, you can copy this address and paste it into the top of a file explorer window to open it. This is where the CodeChat server your virtual environment knows about is currently installed. If this file location is not in your new cloned directory from Getting Your Own Copy of CodeChat, continue following along this section. 
                 # * Below is an example of what it will look like if your server is in the wrong place.
