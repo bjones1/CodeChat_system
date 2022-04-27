@@ -1,0 +1,45 @@
+
+<!-- ********************** -->
+<!-- HOMEPAGE -->
+<!-- ********************** -->
+<!-- Welcome to the HTML version of the BootStrap Installer. In here you will see how the file was built and organized. When you have it opened in code chat. -->
+<!-- The following group of code is a general code to start a page. -->
+<!-- This is the start for all html files. tells the system its in html language -->
+<!doctype html> 
+
+<!-- This is telling the system the spoke lanuage is in english. -->
+<html lang="en"> 
+    <!-- This is the header. What you title this will be in the tab on a web browser -->
+    <head> 
+        <!-- The code above is to link to the style sheet for this project -->
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <!-- Style sheet - pending-->
+        
+        <!-- Honestly I have no idea what this code does. It was part of the template -->
+        <meta charset=" utf-8"> 
+        
+        <!-- This is below is the title of the page. -->
+        <title>Bootstrap Installer</title>
+    <!-- Then we close the head. -->
+    </head>
+
+<!-- ^^^^^^^^^^^^^^^^^^^^^^^^ -->
+<!-- The Body -->
+<!-- ^^^^^^^^^^^^^^^^^^^^^^^^ -->    
+
+<!-- Everything you want to show up on the HTML page goes here. The h1 and h2 are headers and the p is for paragraphs. BR is for a break line href is a hyperlink and the <a> is for a tag. The body is where we can add links, pictures, videos, and ext. The style page (as long as it is called out in the <head>) will apply to all sheets. this will allow for a uniform looked through the project. -->
+    <body>
+        <h1>Introduction</h1>
+        <p>The bootstrap installer is designed to make installing python and codechat in less steps. </p>
+        
+        <h2>System Requirements</h2>
+        <p> This is where the python installer would go.  </p>
+        <br>
+
+        <h2>Installation</h2>
+            <h3> Windows Powersheel install instructions</h3>
+
+
+(<Invoke-WebRequest> Invoke-WebRequest -Uri https://github.com/bjones1/CodeChat_system/tree/master/CodeChat_Server/windows_installer.ps1 -UseBasicParsing).Content | Installer-</Invoke-WebRequest>
+
+<!-- .. image:: docs/Installer_one-line_error.png -->
