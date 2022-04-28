@@ -77,6 +77,8 @@ function run_client(
         false: 100,
     };
 
+    document.getElementById("output").contentWindow.window.onclick = () => {console.log(`hello`)}
+
     // Core code
     // ---------
     splitMe.init();
@@ -88,7 +90,7 @@ function run_client(
     );
 
     // Identify this client on connection.
-    ws.onopen = () => {
+    ws.onopen = () => { 
         console.log(
             `CodeChat Client: websocket to CodeChat Server open. Sending ID of ${id}.`
         );
@@ -310,6 +312,10 @@ function run_client(
     // that it on fires on a left-click release; middle and right clicks
     // had no effect.
     // `Test <./CodeChat_client.css>`_
+    //
+    // inside runclient but not inside ws stuff, reference this (like self)
+    // outputElement.contentWindow.window.onclick = window_onclick; **Don't Use**
+    // document.getElementById("output").contentWindow.window.onclick = function () {console.log('hello')}
     window_onclick = function (file_path, line) {
         
         // Clear the current highlight -- it doesn't make sense to have other
@@ -370,10 +376,11 @@ function run_client(
 
         // Step 4: the length of the string gives the index of the click
         // into a string containing a text rendering of the webpage.
-        //Call Python with the document's text and that index.
+        // Call Python with the document's text and that index.
         // Gets the coordinates of the clicked object, the length of the highlighted area,
         // converts it to string, then sends it to codechat server
         send_to_codechat_server("coordinates", {
+            // Need this func from Enki Code Does this need something only run_client has if so it needs to be inside
             coords: selectionAnchorCoords(),
             length: rStr.length(),
             text: document.body.textContent.toString()
