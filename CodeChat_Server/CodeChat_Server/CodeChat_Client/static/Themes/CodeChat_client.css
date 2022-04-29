@@ -36,7 +36,7 @@ body {
     padding: var(--body-padding);
     margin: 0px;
     /* The default of transparent makes VS Code's black show up and confuse everything. For now, make it white. */
-    background: rgb(68, 68, 68);
+    background: white;
 }
 
 /* This div contains the splitter plus both split divs. */
@@ -79,12 +79,6 @@ body {
     color: red;
 }
 
-#warnings{
-
-    color: rgb(192, 192, 192);
-}
-
-
 /* The status bar at the bottom of the screen. */
 #status_div {
     height: var(--status-height);
@@ -108,7 +102,7 @@ body {
 }
 
 .have_warnings {
-    background-color: gray;
+    background-color: sandybrown;
 }
 
 /* `Class to use <class building>` for the output iframe when a build is in progress. */
@@ -116,18 +110,17 @@ body {
     opacity: 0.5;
 }
 
-/* Class to change the color of error links in CodeChat render */
+/* Class to change the color or error links in CodeChat render */
 .error_link{
 
-    color: white;
+
 }
 
 .divider_vertical,
 .divider_horizontal {
-  background: black;
+  background: #888;
 }
 .divider_vertical.dragged,
 .divider_horizontal.dragged {
-  background: black;
+  background: #f00;
 }
-
