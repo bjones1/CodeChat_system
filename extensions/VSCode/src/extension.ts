@@ -74,7 +74,28 @@ let idle_timer: NodeJS.Timeout | undefined;
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand("extension.codeChat", async () => {
-            console.log("CodeChat extension starting.");
+            console.log("CodeChat extension starting HEllo.");
+            const path = '/Users/aaronpowell/Approaches to Firmware Development/CodeChat_system_dev/CodeChat_Server/CodeChat_Server/render_manager.py'
+            const fileName =  vscode.Uri.file(path)
+            let previewDoc = await vscode.workspace.openTextDocument(fileName)
+            let previewEditorShowOptions: vscode.TextDocumentShowOptions = {
+                viewColumn: vscode.ViewColumn.Beside, 
+                preview: true,
+                preserveFocus: true,
+                selection: new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0))
+            };
+            await vscode.window.showTextDocument(previewDoc,previewEditorShowOptions);
+            // let activeTextEditor = vscode.window.activeTextEditor;
+            // provider.show(fileName, activeTextEditor.document.uri, activeTextEditor.selections);
+                // let previewDocument = await vscode.workspace.openTextDocument(previewUri);
+                // let previewEditorShowOptions: vscode.TextDocumentShowOptions = {
+                //     viewColumn: vscode.ViewColumn.Beside, 
+                //     preview: true,
+                //     preserveFocus: true,
+                //     selection: new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0))
+                // };
+
+            // await vscode.window.showTextDocument(doc, { preview: false });
 
             if (!subscribed) {
                 subscribed = true;

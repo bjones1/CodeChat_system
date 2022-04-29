@@ -20,11 +20,12 @@
 # |docname| - Render manager for the CodeChat Server
 # **************************************************
 # The render manager takes rendering requests send from the Thrift interface of the CodeChat Server, renders them, then sends the results to the associated CodeChat Client.
-#
+# !!!!!!!!!!!
 # Imports
-# =======
+# #######
 # Library imports
 # ---------------
+
 import asyncio
 from enum import Enum
 import logging
@@ -72,8 +73,7 @@ class GetResultType(Enum):
     errors = 2
     # A command, such as ``shutdown```.
     command = 3
-
-
+#
 # Utilities
 # =========
 def GetResultReturn(get_result_type: GetResultType, text: str):
