@@ -1,5 +1,5 @@
 **************************
-Easy Installation and use
+Installation and Use
 **************************
 
 .. contents:: Table of Contents
@@ -14,9 +14,7 @@ To install the CodeChat System, install the CodeChat Server and a CodeChat exten
 CodeChat Server Installation Notes
 ==================================
 
-.. note:: 
- 
- the idea behind our entire project is to get this instruction list as short at possible
+To install the Codechat server:
 
 Windows
 -------
@@ -28,7 +26,17 @@ Windows
 
 #. Run ``windows_installer.ps1``
 
+Troubleshooting for Windows
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. figure:: ./docs/Powershell_Error.PNG
+
+- If Powershell shows an error informing you that running scripts is forbidden on your system, follow these additional steps
+    - Open Powershell in administator mode
+    - type ``Set-ExecutionPolicy RemoteSigned``
+    - Run Powershell Script again
+
+- If you wish to install your own version of Python make sure you are checking the Add to PATH checkbox on installation
 
 Linux
 -----
@@ -44,29 +52,33 @@ or
 
 #.  Type ``bash codechat.sh``
 
+Troubleshooting for Linux
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
+- If you don't have permission to run codechat.sh, type ``chmod 700 codechat.sh`` and try again.
+
+- CodeChat requires `an up-to-date installation of Python 3 <https://www.geeksforgeeks.org/how-to-download-and-install-python-latest-version-on-linux/>`__.
 
 Mac
 ---
-#.  Run something
+#.  `Open a terminal <https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac>`__.
 
+#.  `Install modern Python <https://opensource.com/article/19/5/python-3-default-mac>`_.
 
-Easy Installation Notes
------------------------
+#.  Make sure pip, the Python installer, is `up to date`_: at the terminal, type ``python3 -m pip install --user --upgrade pip``.
 
-#. Get installation to as few steps as possible for Windows (phase 1)
+#.  `Create a virtual environment`_ named *codechat* by typing ``python3 -m venv codechat``. This keeps the installation of the CodeChat System from interfering with other installed Python programs and vice versa.
 
-#. Implement to other OS(phase 2):
-    need virtual machine use to test on Linux and Mac, maybe even for Windows so we dont accidentally destroy our own machines
+#.  `Activate this virtual environment`_ by typing ``source codechat/bin/activate``.
 
-#. Implement a test to make sure CodeChat system installed correctly (phase 3):
-    Ideally, this would open a simple python code with proper documentation that serves as an almost "landing page" for the first time the user opens their IDE with CodeChat installed.
+#.  Install the CodeChat Server by typing ``python3 -m pip install --upgrade CodeChat_Server``.
 
-#. Pretty up and upload to web (phase 3)
+#.  Determine the location of the installed CodeChat Server by typing ``which CodeChat_Server``. You'll need to enter this path when setting up the CodeChat plugin/extension in your IDE.
 
-#. Convert scripts into executables and tars for even easier installation.
+#.  Install the `CodeChat extension/plugin <../extensions/contents>`_ for your IDE or text editor.
 
-#. profit
+To update the CodeChat Server, repeat steps 1, 5, and 6.
+
 
 
 CodeChat extension/plugin installation
@@ -116,3 +128,20 @@ To use the CodeChat System with an external renderer not listed above:
 Use
 ===
 See the `home page <../index>` for a brief overview of the CodeChat Client GUI.
+
+Checklist of Notes (Previous Groups)
+-------------------------------------
+
+#. **{Complete}** Get installation to as few steps as possible for Windows (phase 1)
+
+#. **{Complete}** Implement to other OS(phase 2):
+    Need virtual machine use to test on Linux and Mac, maybe even for Windows so we dont accidentally destroy our own machines
+
+#. **{To be Complete}** Implement a test to make sure CodeChat system installed correctly (phase 3):
+    Ideally, this would open a simple python code with proper documentation that serves as an almost "landing page" for the first time the user opens their IDE with CodeChat installed.
+
+#. **{To be Complete}** Pretty up and upload to web (phase 3)
+
+#. **{To be Complete}** Convert scripts into executables and tars for even easier installation.
+
+#. Profit
