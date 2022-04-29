@@ -13,7 +13,7 @@ Installing the Necessary Extensions, Libraries, and Compilation tools
 =====================================================================
 These Tools are what are needed to build the thrift includes and libraries to be used in the server setup:
 
-#. `Visual Studio 2019 Community <https://visualstudio.microsoft.com/vs>`_ (What I used, might be up for changes based off of if there's any conflicts with the version of VS that is used to build the plugin)
+#. `Visual Studio 2019 Community <https://visualstudio.microsoft.com/vs>`_ (We are using VS 2019 community version to work with our plugins. Ideally at some time in the future this will be changed to the most recent version. Also, Visual Studio will ONLY install to your storage device your Operating System is located on, so be wary if you have limited space on this drive. )
 #. `Developer Command Prompt for VS 2022` This should have downloaded with the main Visual Studio 2019, search for it in the windows search bar
 #. `thrift-0.15.0.exe <http://archive.apache.org/dist/thrift/0.15.0>`__
 
@@ -43,7 +43,7 @@ Creating Thrift Libraries
 -------------------------
 Creating the thrift libraries involves opening the solution of libthrift (`thrift.sln`). This should be in **"C:/src/thrift/lib/cpp/thrift/sln"**. This solution has two projects, `libthrift` and `libthriftnb`. 
 
-Our thrift implementation uses `libthrift` so in the solution explorer right click `libthriftnb` and press "Unload Project"
+Our thrift implementation uses `libthrift` so in the solution explorer right click `libthriftnb` and press "Unload Project" 
 
 Placing Includes Together
 `````````````````````````
@@ -72,10 +72,11 @@ Open NotePad++ in debug mode.  (These are the official steps - I could not get t
     - Download https://notepad-plus-plus.org/assets/pluginListTestTools/wingup.release.x32.zip
     - Copy that version of GUP.exe to Notepad++/updater/
     - Copy the pl.x86.json file from NPP_Extension/basic_plugin into Notepad++/plugins/Config/
-
     - Select plugins from the top menu and open the plugin folder
     - Create a folder called CodeChat
     - Add your Codechat.dll to the CodeChat folder
+    
+ **When working through these steps, I was unable to launch Notepad++ into debug mode. I would receive an error that the software was no longer functional and I would have to install Notepad++ again. I would recommend a more comprehensive way to perform this task.**
 
 CodeChat should appear in the plugins list with the option for a hello world
 Currently the plugin creates a new file that says Hello, Notepad++
@@ -109,13 +110,13 @@ When downloading Visual Studio 2019 the following packages need to be installed 
     - C++ Desktop Developer Suite
 
 Once the following packages are installed in visual studio, the thrift repository should be downloaded from below
-https://github.com/apache/thrift 
+https://github.com/apache/thrift
 During our development, we noticed the thrift compiler was not in the master folder from github. As a result the thrift compiler was found and downloaded from 
 https://www.apache.org/dyn/closer.cgi?path=/thrift/0.16.0/thrift-0.16.0.exe 
 
 The compiler was then placed in the tutorial folder of the thrift directory
 
-The thrift client was made using the official client example from apache found `here <https://thrift.apache.org/tutorial/cpp.html>`_ 
+The thrift client was made using the official client example from apache found `here <https://thrift.apache.org/tutorial/cpp.html>`_
 
 The main library used to create the client is the "Calculator.h" header file. This file relies on the tutorial and shared code examples provided by apache. 
 In order to retrieve these files, the user must run these two commands in the tutorial folder with the newly downloaded 
