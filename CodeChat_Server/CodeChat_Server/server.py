@@ -135,6 +135,10 @@ class CodeChatHandler:
             return "Shutting down."
         return ""
 
+    def gotoFile(self, id_) -> str:
+        logger.info("go to file()\n")
+        return "test"
+
     # Render the provided text to HTML, then enqueue it for the web view.
     def start_render(self, text: str, path: str, id: int, is_dirty: bool) -> str:
         logger.info(
