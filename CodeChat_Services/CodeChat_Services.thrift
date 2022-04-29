@@ -78,6 +78,10 @@ service EditorPlugin {
     // See if the server is running. It returns an empty string on success.
     string ping()
 
+    string gotoFile(
+        1: i32 id
+    )
+
     // Create a CodeChat Client and return HTML for it and its ID.
     RenderClientReturn get_client(
         // The location of the client to return.
