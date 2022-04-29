@@ -40,6 +40,14 @@
             <h3> Windows Powersheel install instructions</h3>
 
 
-(<Invoke-WebRequest> Invoke-WebRequest -Uri https://github.com/bjones1/CodeChat_system/tree/master/CodeChat_Server/windows_installer.ps1 -UseBasicParsing).Content | Installer-</Invoke-WebRequest>
+            <Invoke-WebRequest> (Invoke-WebRequest -Uri https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/windows_installer.ps1).Links.Href</Invoke-WebRequest>
 
-<!-- .. image:: docs/Installer_one-line_error.png -->
+            <Invoke-WebRequest>(Invoke-WebRequest -Uri https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/codechat.sh).Links.Href</Invoke-WebRequest>
+
+<!-- No errors are popping up with this in Powershell however it is still not running the script to install the python or codechat for Windows 11-->
+<!-- -->
+<!-- .. image:: ps_oneline_windows_11.png-->
+<!-- -->
+<!-- -->
+<!-- .. image:: ps_oneline_windows_11_notinstalled.png-->
+<!-- -->
