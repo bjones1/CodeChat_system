@@ -65,9 +65,23 @@ It is displayed on the plugin page in the Marketplace.
 
     <!--
     `Application-level listeners <https://plugins.jetbrains.com/docs/intellij/plugin-listeners.html#defining-application-level-listeners>`_.
-    -->
     <applicationListeners>
         <listener class="com.github.bjones1.intellij.codechat.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+    -->
+
+    <!-- `Actions <https://plugins.jetbrains.com/docs/intellij/basic-action-system.html>`_ -->
+    <actions>
+        <action
+                id="com.github.bjones1.intellij.codechat.EnableDisableAction"
+                class="com.github.bjones1.intellij.codechat.EnableDisableAction"
+                text="Enable/disable the CodeChat plugin"
+        >
+            <add-to-group
+                    group-id="ToolsMenu"
+                    anchor="last"
+            />
+        </action>
+    </actions>
 </idea-plugin>

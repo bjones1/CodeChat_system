@@ -74,6 +74,10 @@ class ApplicationService: Disposable {
             return client
         }
 
+    fun isClientAvailable(): Boolean {
+        return client != null
+    }
+
     // The path to the CodeChat Server executable.
     var codeChatServerExecutable: String
         get() = PropertiesComponent.getInstance().getValue(CODECHAT_SERVER_EXECUTABLE_KEY, "CodeChat_Server")

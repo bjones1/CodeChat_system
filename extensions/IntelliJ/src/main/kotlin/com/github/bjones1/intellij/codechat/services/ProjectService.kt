@@ -14,6 +14,7 @@ import com.intellij.openapi.components.service
 class ProjectService(project: Project) {
 
     // TODO: store a client ID; stop that client in dispose().
+    // TODO: provide an enable/disable.
 
     init {
         println(MyBundle.message("projectService", project.name))
