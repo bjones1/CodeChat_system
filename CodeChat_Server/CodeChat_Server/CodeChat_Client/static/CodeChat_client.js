@@ -512,9 +512,6 @@ function parse_for_errors(errors_html) {
     ];
 }
 
-
-
-
 // Delete the element used to produce a highlight.
 function clearHighlight(){
     const highlighter = getHighlight();
@@ -526,4 +523,38 @@ function clearHighlight(){
 // Return the ``div`` used to produce a highlight, or None if it doesn't exist.
 function getHighlight(){
     return document.getElementById("highlighter");
+}
+
+function selectionAnchorCoords() {
+    // Using ``window.getSelection()``
+    // Make sure a `selection <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_ exists.
+    var selection = window.getSelection();
+    if (selection.rangeCount == 0) return 0;
+
+    // The selection can contain not just a point (from a
+    // single mouse click) but a range (from a mouse drag or
+    // shift+arrow keys).
+    // We're looking for the coordinates of the focus node
+    // (the place where the mouse ends up after making the selection).
+    // However, the range returned by ``selection.getRangeAt(0)``
+    // begins earlier in the document and ends later, regardless
+    // how the mouse was dragged. So, create a new range containing
+    // just the point at the focus node, so we actually get
+    // a range pointing to where the mouse is.
+    // Ref: `focus <https://developer.mozilla.org/en-US/docs/Web/API/Selection.focusNode>`_ of the selection.
+    // `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
+    var rangeAtFocus = document.createRange();
+    rangeAtFocus.setStart(selection.focusNode, selection.focusOffset);
+
+    // Insert a measurable element (a span) at the selection's
+    // focus.
+    var span = document.createElement("span");
+    rangeAtFocus.insertNode(span);
+
+    // Measure coordinates at this span, then remove it.
+    var [left, top] = findPos(span);
+    var height = span.offsetHeight;
+    span.remove();
+
+    return [left, top, height];
 }
