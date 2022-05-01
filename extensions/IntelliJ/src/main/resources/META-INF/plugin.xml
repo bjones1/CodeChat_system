@@ -56,6 +56,10 @@ It is displayed on the plugin page in the Marketplace.
                 id="com.github.bjones1.intellij.codechat.settings.AppSettingsConfigurable"
                 displayName="CodeChat"
         />
+        <!-- See the `docs <https://plugins.jetbrains.com/docs/intellij/notifications.html#top-level-notifications-balloons>`__. -->
+        <notificationGroup id="CodeChat"
+                           displayType="BALLOON"
+        />
     </extensions>
 
 

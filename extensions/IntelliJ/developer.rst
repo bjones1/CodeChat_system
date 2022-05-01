@@ -12,49 +12,8 @@ Plan
 ====
 -   Create a project-wide menu item (an `action <https://plugins.jetbrains.com/docs/intellij/plugin-actions.html>`_) named "Enable/disable CodeChat".
 -   Have a project service_ that stores the client ID for that project.
--   Use `editor hints <https://plugins.jetbrains.com/docs/intellij/notifications.html#editor-hints>`_ to report errors; use `balloons <https://plugins.jetbrains.com/docs/intellij/notifications.html#top-level-notifications-balloons>`_ for informational messages.
 -   Need to use a `Java Timer <https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Timer.html>`_ to render at a good time.
--   Run the server; on error, display either an error message from the subprocess or the stdout/stderr from the subproces. A guess at how to do this in Java: see `SO <https://stackoverflow.com/a/57949752/16038919>`__. Slightly modified to wait until the process ends and to read all output on failure (untested):
 
-    .. code:: Java
-        :number-lines:
-
-        public final class Processes
-        {
-            private static final String NEWLINE = System.getProperty("line.separator");
-
-            /**
-            * @param command the command to run
-            * @return the output of the command
-            * @throws IOException if an I/O error occurs
-            */
-            public static String run(String... command) throws IOException
-            {
-                ProcessBuilder pb = new ProcessBuilder(command).redirectErrorStream(true);
-                Process process = pb.start();
-                boolean finished = process.waitFor(5, TimeUnits.SECONDS);
-                StringBuilder result = new StringBuilder(80);
-                // TODO: read everything all at once as UTF-8. How?
-                try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream())))
-                {
-                    while (true)
-                    {
-                        String line = in.readLine();
-                        if (line == null)
-                            break;
-                        result.append(line).append(NEWLINE);
-                    }
-                }
-                return result.toString();
-            }
-
-            /**
-            * Prevent construction.
-            */
-            private Processes()
-            {
-            }
-        }
 
 Questions:
 

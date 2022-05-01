@@ -20,7 +20,7 @@ class ProjectService(project: Project) {
 
         try {
             val applicationService = service<ApplicationService>()
-            applicationService.client!!.ping()
+            applicationService.getClient(project)?.ping()
         } catch (x: TException) {
             x.printStackTrace()
         }
