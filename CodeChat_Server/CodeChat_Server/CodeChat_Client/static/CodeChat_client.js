@@ -386,11 +386,8 @@ function run_client(
             text: document.body.textContent.toString()
             })
 
-    // For more information pertaining to the window_onclick() function, visit
-    // <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
-
-
-        
+        // For more information pertaining to the window_onclick() function, visit
+        // <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
     };
 }
 
@@ -528,7 +525,8 @@ function getHighlight(){
 function selectionAnchorCoords() {
     // Using ``window.getSelection()``
     // Make sure a `selection <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_ exists.
-    var selection = window.getSelection();
+    // Should these be let not var? 
+    let selection = window.getSelection();
     if (selection.rangeCount == 0) return 0;
 
     // The selection can contain not just a point (from a
@@ -543,17 +541,17 @@ function selectionAnchorCoords() {
     // a range pointing to where the mouse is.
     // Ref: `focus <https://developer.mozilla.org/en-US/docs/Web/API/Selection.focusNode>`_ of the selection.
     // `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
-    var rangeAtFocus = document.createRange();
+    let rangeAtFocus = document.createRange();
     rangeAtFocus.setStart(selection.focusNode, selection.focusOffset);
 
     // Insert a measurable element (a span) at the selection's
     // focus.
-    var span = document.createElement("span");
+    let span = document.createElement("span");
     rangeAtFocus.insertNode(span);
 
     // Measure coordinates at this span, then remove it.
-    var [left, top] = findPos(span);
-    var height = span.offsetHeight;
+    let [left, top] = findPos(span);
+    let height = span.offsetHeight;
     span.remove();
 
     return [left, top, height];
