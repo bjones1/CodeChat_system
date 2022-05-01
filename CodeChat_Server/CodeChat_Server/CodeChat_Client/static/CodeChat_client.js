@@ -318,7 +318,7 @@ function run_client(
     // outputElement.contentWindow.window.onclick = window_onclick; **Don't Use**
     // document.getElementById("output").contentWindow.window.onclick = function () {console.log('hello')}
     // I don't think we need line?
-    window_onclick = function (file_path) {
+    window_onclick = function (file_path /* , line*/) {
         
         console.log('hello');
         // Clear the current highlight -- it doesn't make sense to have other
@@ -349,7 +349,10 @@ function run_client(
         //   <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneRange>`_.
         // 
 
-        const r = window.getSelection().getRangeAt(0).cloneRange();
+
+        // if selection is defined and greater than 0 found at `link <https://stackoverflow.com/questions/22935320/uncaught-indexsizeerror-failed-to-execute-getrangeat-on-selection-0-is-not>`_
+        
+        const r = outputElement.contentWindow.window.getSelection().getRangeAt(0).cloneRange();
 
         // This performs step 2 above: the cloned range is now changed
         // to contain the web page from its beginning to the point where
