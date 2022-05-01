@@ -145,7 +145,8 @@ function run_client(
 
                     console.log("CodeChat Client: load complete.");
                 }
-                outputElement.contentWindow.window.onclick = () => {console.log(`hello`)}
+                let outputElement_location = outputElement.contentWindow.window.location;
+                outputElement.contentWindow.window.onclick = () => window_onclick(outputElement_location.pathname, )
             };
 
             // Set the new src to (re)load content. At startup, the ``srcdoc`` attribute shows some welcome text. Remove it so that we can now assign the ``src`` attribute.
@@ -316,8 +317,10 @@ function run_client(
     // inside runclient but not inside ws stuff, reference this (like self)
     // outputElement.contentWindow.window.onclick = window_onclick; **Don't Use**
     // document.getElementById("output").contentWindow.window.onclick = function () {console.log('hello')}
-    window_onclick = function (file_path, line) {
+    // I don't think we need line?
+    window_onclick = function (file_path) {
         
+        console.log('hello');
         // Clear the current highlight -- it doesn't make sense to have other
         // text highlighted after a click.    
         clearHighlight();
