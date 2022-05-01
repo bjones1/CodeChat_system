@@ -77,8 +77,6 @@ function run_client(
         false: 100,
     };
 
-    document.getElementById("output").contentWindow.window.onclick = () => {console.log(`hello`)}
-
     // Core code
     // ---------
     splitMe.init();
@@ -147,6 +145,7 @@ function run_client(
 
                     console.log("CodeChat Client: load complete.");
                 }
+                outputElement.contentWindow.window.onclick = () => {console.log(`hello`)}
             };
 
             // Set the new src to (re)load content. At startup, the ``srcdoc`` attribute shows some welcome text. Remove it so that we can now assign the ``src`` attribute.
@@ -248,7 +247,8 @@ function run_client(
             } else {
                 console.log(`CodeChat Client: Unknown command ${result.text}.`);
             }
-        } else {
+        } 
+        else {
             console.log(
                 `CodeChat Client: Unknown GetResultType: ${result.get_result_type}.`
             );
