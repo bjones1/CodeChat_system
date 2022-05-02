@@ -37,17 +37,22 @@
         <br>
 
         <h2>Installation</h2>
-            <h3> Windows Powersheel install instructions</h3>
-
+            <h3> Windows Powershell install instructions</h3>
+           <p>Copy and paste the code below into powershell. </p> 
+ <!-- The way that the one line works is to invoke a web request which tells powershell it isn't a local file but a file found on the web. The is looks at the path and pulls it. -->
 
             <Invoke-WebRequest> (Invoke-WebRequest -Uri https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/windows_installer.ps1).Links.Href</Invoke-WebRequest>
-
-            <Invoke-WebRequest>(Invoke-WebRequest -Uri https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/codechat.sh).Links.Href</Invoke-WebRequest>
-
-<!-- No errors are popping up with this in Powershell however it is still not running the script to install the python or codechat for Windows 11-->
+<!-- -->
+<!-- .. note:: the window installer checks for python.-->
+<!-- -->
+<!-- ^^^^^^^^^^^^^^^^^^^^^^^^ -->
+<!-- Final Results -->
+<!-- ^^^^^^^^^^^^^^^^^^^^^^^^ -->    
+<!-- No errors are popping up with this in Powershell however it is still not running the script to install the python or codechat for Windows 11.-->
 <!-- -->
 <!-- .. image:: ps_oneline_windows_11.png-->
 <!-- -->
 <!-- -->
 <!-- .. image:: ps_oneline_windows_11_notinstalled.png-->
 <!-- -->
+<!-- I have done some research and I'm not sure if this is true or not.In order for the oneline code to work does the file have to be an executable file instead of a PS1? I thought the file was saved as PS1 so the program knew it was powershell code. Sorry I wasn't able to get it to work fully. I got the powershell to accept the one line without errors I just can't figure out why it won't run and that could be because of something I am over looking. -->
