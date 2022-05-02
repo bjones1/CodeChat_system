@@ -122,6 +122,7 @@ body {
     color: white;
 }
 
+/* Sets the color of the border and build menu splitter */
 .divider_vertical,
 .divider_horizontal {
   background: black;

@@ -235,11 +235,15 @@ def server_static(filepath):
 # The endpoint to get the HTML for the CodeChat Client.
 @bottle.route("/client")
 def client_html() -> str:
+    theme_file = open('C:/Users/scarb/Desktop/Spring 2022/Approaches to Firmware Developement/CodeChat_system/CodeChat_Server/CodeChat_Server/CodeChat_Client/static/Theme_Picker.txt', 'r')
+    read_theme = theme_file.read()
+    theme_file.close()
     return bottle.template(
         str(Path(__file__).parent / "CodeChat_Client/templates/CodeChat_client.html"),
         client_id=bottle.request.query.id,
         WEBSOCKET_PORT=WEBSOCKET_PORT,
-        #current_theme = "Dark_Theme.css"
+        # the text file for this specific case where the theme is being read from is in the static folder of the CodeChat_client
+        current_theme = read_theme
         
     )
 
