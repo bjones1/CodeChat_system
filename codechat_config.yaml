@@ -51,3 +51,4 @@ args:
 
 # ``project_type``: optional; defaults to ``general``. Define the project type, which enables special processing based on the type. Valid values are ``general`` (no special processing), ``Doxygen``, and ``PreTeXt``.
 #project_type: general
+
