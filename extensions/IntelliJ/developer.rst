@@ -5,13 +5,26 @@ This plugin was created following the `IntelliJ docs <https://plugins.jetbrains.
 
 Architecture
 ============
-An application-wide service stores the Thrift transport and client. A getter on the client starts the server and opens the transport as necessary before returning a working client; it also properly closes the transport using a dispose() override.
+-   An `application-wide service <src/main/kotlin/com/github/bjones1/intellij/codechat/services/ApplicationService.kt>` stores the Thrift transport and client; it starts the CodeChat Server and maintains a network connection to it.
+-   A `per-project service <src/main/kotlin/com/github/bjones1/intellij/codechat/services/ProjectService.kt>` requests a CodeChat Client for a project from the application service's Thrift client. It provides methods to interact with the project's CodeChat Client.
+-   An `action <src/main/kotlin/com/github/bjones1/intellij/codechat/EnableDisableAction.kt>` provides a menu item to enable/disable CodeChat for the current project.
+-   A `setting <src/main/kotlin/com/github/bjones1/intellij/codechat/settings/AppSettingsConfigurable.kt>` and its `associated GUI <src/main/kotlin/com/github/bjones1/intellij/codechat/settings/AppSettingsComponent.kt>` allows the user to specify the path to the CodeChat Server executable.
 
+Error handling
+--------------
+The Java networking libraries don't provide any listeners / callbacks if the network connection fails or is closed. Therefore, this plugin handles errors which arise from doing network I/O:
+
+-   All CodeChat Services calls (which are RPC) are enclosed in a try/catch block.
+-   We assume that any exceptions caused by these calls indicates that the network connection has failed. In this case:
+
+    -   Report this failure to the user.
+    -   Shut down the network connection.
+    -   Disable CodeChat in all projects.
+
+    Other projects using this network connection don't report the error, to avoid producing repetitive errors.
 
 Plan
 ====
--   Create a project-wide menu item (an `action <https://plugins.jetbrains.com/docs/intellij/plugin-actions.html>`_) named "Enable/disable CodeChat".
--   Have a project service_ that stores the client ID for that project.
 -   Need to use a `Java Timer <https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Timer.html>`_ to render at a good time.
 
 
@@ -41,6 +54,7 @@ Source
     gradle.properties
     src/main/resources/META-INF/plugin.xml
     src/main/kotlin/com/github/bjones1/intellij/codechat/MyBundle.kt
+    src/main/kotlin/com/github/bjones1/intellij/codechat/EnableDisableAction.kt
     src/main/kotlin/com/github/bjones1/intellij/codechat/listeners/MyProjectManagerListener.kt
     src/main/kotlin/com/github/bjones1/intellij/codechat/services/ApplicationService.kt
     src/main/kotlin/com/github/bjones1/intellij/codechat/services/ProjectService.kt
