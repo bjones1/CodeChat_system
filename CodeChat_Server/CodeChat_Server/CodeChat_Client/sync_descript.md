@@ -38,6 +38,20 @@ I'd start off by looking at the files, specifically in the functions
 
 `CodeChat_Client.html` is not as important, as we're doing the response to the clicking programmatically and not by hard coding it (Thankfully).
 
+## Getting Setup
+If you're working on the javascript to fix window_onclick
+- Make sure that you will output your renders to a web browser 
+    - File -> Preferences -> Settings -> Search(CodeChat)
+    - Set Client Location to browser (this will load in your default, I used edge and it worked fine)
+- In the web browser use f12 to open the editor and ctrl+f5 to reload the browser code (You'll do this to test any and every change you make)
+
+No Matter What
+- Make sure that your CodeChat_Server is pointing to your working directory for all it's stuff
+    - activate your virtual enviroment in command prompt
+    - cd to your working directory
+    - run ``python -m pip install -e .``
+
+
 ## The JavaScript
 This basically runs the client. This part of CodeChat is what we're looking at to make sure our documentation isn't borked. I'm actually using it now to check this documentation.
 
@@ -56,6 +70,7 @@ This is done right at the end of the websocket build message.
 
 ## The Render_Manager
 Right now it just prints out the data when it gets ``msg == "coordinates"``.
+This is printed out to the `cmd` console. This is important, you can only see this by running the codechat_server in serve mode and keeping the command window open.
 
 That data being:
 - ``coords``: The coordinates of the click (look into ``selectionAnchorCoords`` and ``findpos`` for more info)
