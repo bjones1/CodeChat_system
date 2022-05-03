@@ -146,7 +146,7 @@ function run_client(
                     console.log("CodeChat Client: load complete.");
                 }
                 let outputElement_location = outputElement.contentWindow.window.location;
-                outputElement.contentWindow.window.onclick = () => window_onclick(outputElement_location.pathname, )
+                outputElement.contentWindow.window.onclick = window_onclick
             };
 
             // Set the new src to (re)load content. At startup, the ``srcdoc`` attribute shows some welcome text. Remove it so that we can now assign the ``src`` attribute.
@@ -306,6 +306,42 @@ function run_client(
         });
     };
 
+    // Grabs the coordinates for the selection (hopefully)
+    function selectionAnchorCoords() {
+        // Using ``window.getSelection()``
+        // Make sure a `selection <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_ exists.
+        // Should these be let not var? 
+        let selection = outputElement.contentWindow.window.getSelection();
+        if (selection.rangeCount == 0) return 0;
+    
+        // The selection can contain not just a point (from a
+        // single mouse click) but a range (from a mouse drag or
+        // shift+arrow keys).
+        // We're looking for the coordinates of the focus node
+        // (the place where the mouse ends up after making the selection).
+        // However, the range returned by ``selection.getRangeAt(0)``
+        // begins earlier in the document and ends later, regardless
+        // how the mouse was dragged. So, create a new range containing
+        // just the point at the focus node, so we actually get
+        // a range pointing to where the mouse is.
+        // Ref: `focus <https://developer.mozilla.org/en-US/docs/Web/API/Selection.focusNode>`_ of the selection.
+        // `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
+        let rangeAtFocus = outputElement.contentDocument.createRange();
+        rangeAtFocus.setStart(selection.focusNode, selection.focusOffset);
+    
+        // Insert a measurable element (a span) at the selection's
+        // focus.
+        let span = outputElement.contentDocument.createElement("span");
+        rangeAtFocus.insertNode(span);
+    
+        // Measure coordinates at this span, then remove it.
+        let [left, top] = findPos(span);
+        let height = span.offsetHeight;
+        span.remove();
+    
+        return [left, top, height];
+    }
+
     // The `window.onclick <https://developer.mozilla.org/en-US/docs/Web/API/Window.onclick>`_
     // event is "called when the user clicks the mouse button while the
     // cursor is in the window." Although the docs claim that "this event
@@ -318,7 +354,7 @@ function run_client(
     // outputElement.contentWindow.window.onclick = window_onclick; **Don't Use**
     // document.getElementById("output").contentWindow.window.onclick = function () {console.log('hello')}
     // I don't think we need line?
-    window_onclick = function (file_path /* , line*/) {
+    const window_onclick = (/*file_path , line*/) => {
         
         console.log('hello');
         // Clear the current highlight -- it doesn't make sense to have other
@@ -360,7 +396,7 @@ function run_client(
         // <https://developer.mozilla.org/en-US/docs/Web/API/Range.setStartBefore>`_
         // on `document.body
         // <https://developer.mozilla.org/en-US/docs/Web/API/document.body>`_.
-        r.setStartBefore(document.body);
+        r.setStartBefore(outputElement.contentDocument.body);
 
         //    Step 3:
         //
@@ -386,11 +422,12 @@ function run_client(
         // Gets the coordinates of the clicked object, the length of the highlighted area,
         // converts it to string, then sends it to codechat server
         send_to_codechat_server("coordinates", {
-            // Need this func from Enki Code Does this need something only run_client has if so it needs to be inside
             coords: selectionAnchorCoords(),
-            length: rStr.length(),
-            text: document.body.textContent.toString()
-            })
+            length: rStr.length,
+            text: outputElement.contentDocument.body.textContent.toString()
+            // The reason we aren't just sending str is because if we want to just grab a section around where is clicked then we need the whole section to find whats ahead as well as whats behind.
+        })
+        // For future development: I'm not sure this is particularily efficient. This is basically just 
 
         // For more information pertaining to the window_onclick() function, visit
         // <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
@@ -402,6 +439,23 @@ var navigate_to_error, save_file;
 
 // Utilities
 // =========
+// Find the position of a span
+function findPos(obj) {
+    let curLeft = 0;
+    let curTop = 0;
+    // element.offsetLeft and element.offsetTop measure relative to
+    // the object's parent. Walk the tree of parents, summing each
+    // offset to determine the offset from the origin of the web page.
+    do {
+        curLeft += obj.offsetLeft;
+        curTop += obj.offsetTop;
+    } while (obj = obj.offsetParent);
+    // See `element.getBoundingClientRect
+    // <https://developer.mozilla.org/en-US/docs/Web/API/element.getBoundingClientRect>`_
+    // for converting viewport coords to screen coords.
+    return [curLeft - window.scrollX, curTop - window.scrollY];
+}
+
 // Get the splitter element.
 function get_splitter() {
     return document.getElementById("splitter");
@@ -528,37 +582,4 @@ function getHighlight(){
     return document.getElementById("highlighter");
 }
 
-function selectionAnchorCoords() {
-    // Using ``window.getSelection()``
-    // Make sure a `selection <https://developer.mozilla.org/en-US/docs/Web/API/Selection>`_ exists.
-    // Should these be let not var? 
-    let selection = window.getSelection();
-    if (selection.rangeCount == 0) return 0;
-
-    // The selection can contain not just a point (from a
-    // single mouse click) but a range (from a mouse drag or
-    // shift+arrow keys).
-    // We're looking for the coordinates of the focus node
-    // (the place where the mouse ends up after making the selection).
-    // However, the range returned by ``selection.getRangeAt(0)``
-    // begins earlier in the document and ends later, regardless
-    // how the mouse was dragged. So, create a new range containing
-    // just the point at the focus node, so we actually get
-    // a range pointing to where the mouse is.
-    // Ref: `focus <https://developer.mozilla.org/en-US/docs/Web/API/Selection.focusNode>`_ of the selection.
-    // `Range <https://developer.mozilla.org/en-US/docs/Web/API/range>`_
-    let rangeAtFocus = document.createRange();
-    rangeAtFocus.setStart(selection.focusNode, selection.focusOffset);
-
-    // Insert a measurable element (a span) at the selection's
-    // focus.
-    let span = document.createElement("span");
-    rangeAtFocus.insertNode(span);
-
-    // Measure coordinates at this span, then remove it.
-    let [left, top] = findPos(span);
-    let height = span.offsetHeight;
-    span.remove();
-
-    return [left, top, height];
-}
+// move this inside runclient change window and document to match window_onclick
