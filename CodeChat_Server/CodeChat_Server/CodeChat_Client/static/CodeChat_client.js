@@ -145,7 +145,7 @@ function run_client(
 
                     console.log("CodeChat Client: load complete.");
                 }
-                let outputElement_location = outputElement.contentWindow.window.location;
+                // Call to set the onclick functionality of the output window to preform the function window_onclick
                 outputElement.contentWindow.window.onclick = window_onclick
             };
 
@@ -342,6 +342,9 @@ function run_client(
         return [left, top, height];
     }
 
+    // Window_onclick (Sync)
+    // ---------------------
+    // 
     // The `window.onclick <https://developer.mozilla.org/en-US/docs/Web/API/Window.onclick>`_
     // event is "called when the user clicks the mouse button while the
     // cursor is in the window." Although the docs claim that "this event
@@ -350,13 +353,12 @@ function run_client(
     // had no effect.
     // `Test <./CodeChat_client.css>`_
     //
-    // inside runclient but not inside ws stuff, reference this (like self)
-    // outputElement.contentWindow.window.onclick = window_onclick; **Don't Use**
-    // document.getElementById("output").contentWindow.window.onclick = function () {console.log('hello')}
-    // I don't think we need line?
-    const window_onclick = (/*file_path , line*/) => {
+    // This is inside of runclient for a few reasons. First and foremost, it uses outputElement, which is a local ``let`` defined inside ``runclient``, and secondly, we need ``send_to_codechat_server`` which is also defined inside ``runclient``.
+    const window_onclick = () => {
         
+        // This is just for testing, just prints to the browser editor console so it's not intrusive at all if you want to leave it for debugging (user wouldn't ever see this unless they were looking for it).
         console.log('hello');
+
         // Clear the current highlight -- it doesn't make sense to have other
         // text highlighted after a click.    
         clearHighlight();
@@ -396,8 +398,12 @@ function run_client(
         // <https://developer.mozilla.org/en-US/docs/Web/API/Range.setStartBefore>`_
         // on `document.body
         // <https://developer.mozilla.org/en-US/docs/Web/API/document.body>`_.
+        // 
+        // interesting bit here:
         r.setStartBefore(outputElement.contentDocument.body);
-
+        // So to grab the document of the internal window, we need to grab the ``contentDocument``
+        // Notice that this is very similar syntax to contentWindow. Keep this in mind whenever making changes especially if those changes come from external sources, all documents and windows must be converted to this format to actually grab from the internal window
+        // 
         //    Step 3:
         //
         // - `cloneContents <https://developer.mozilla.org/en-US/docs/Web/API/Range.cloneContents>`_
@@ -412,9 +418,10 @@ function run_client(
         //   contains a text rendering of the webpage from the beginning of the
         //   page to the point where the user clicked.
         const rStr = r.cloneContents().textContent.toString();
+        // honestly we do this because we want the length of the selection. This gets sent along with the whole webpage as a string to the server
 
 
-        //call selection anchor coords
+        // call selection anchor coords
 
         // Step 4: the length of the string gives the index of the click
         // into a string containing a text rendering of the webpage.
@@ -427,7 +434,8 @@ function run_client(
             text: outputElement.contentDocument.body.textContent.toString()
             // The reason we aren't just sending str is because if we want to just grab a section around where is clicked then we need the whole section to find whats ahead as well as whats behind.
         })
-        // For future development: I'm not sure this is particularily efficient. This is basically just 
+        // For future development: I'm not sure this is particularily efficient. This is basically just sending that whole webpage, but realistically we only need a small selection, maybe a line or two.
+        // The question is, should we do the concatinating in javascript or in python. I would guess js, because usually between python and any other language the other language is faster, and we'll have to send less over the websocket...
 
         // For more information pertaining to the window_onclick() function, visit
         // <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_
@@ -440,7 +448,10 @@ var navigate_to_error, save_file;
 // Utilities
 // =========
 // Find the position of a span
+// Pulled this from `enki code <https://github.com/bjones1/enki/blob/master/enki/plugins/preview/preview_sync.py#L556>`_ 
+// This is outside because it doesn't rely on any definitions like outputElement from Runclient.
 function findPos(obj) {
+    // note that these are let, not var. as far as I can tell it is because let is primarily for local variables, which these are.
     let curLeft = 0;
     let curTop = 0;
     // element.offsetLeft and element.offsetTop measure relative to
