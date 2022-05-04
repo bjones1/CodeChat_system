@@ -60,6 +60,7 @@ void commandMenuInit()
     //            );
     setCommand(0, TEXT("Hello Notepad++"), hello, NULL, false);
     setCommand(1, TEXT("Hello (with dialog)"), helloDlg, NULL, false);
+    setCommand(2, TEXT("Read Text File"), readFile, NULL, false);
 }
 
 //
@@ -113,4 +114,28 @@ void hello()
 void helloDlg()
 {
     ::MessageBox(NULL, TEXT("Hello, Notepad++!"), TEXT("Notepad++ Plugin Template"), MB_OK);
+}
+
+void readFile()
+{
+    // This should look for the text file we want to pull data from
+    ::ifstream myfile("TestDoc.txt");
+    // String used to store text information before being moved to Noteapad++
+    ::string data;
+    // if statement used to gather data from the text file. 
+    if (myfile.is_open())
+    {
+        while (myfile)
+        {
+            ::EM_GETLINE(myfile, data);
+            ::cout << myline << '\n';
+        }
+    }
+    else
+    {
+        cout << "File could not be opened.\n";
+    }
+    // Display this text file into a separate window in Notepad++
+    ::MessageBox(NULL, myfile, MB_OK);
+
 }

@@ -14,69 +14,26 @@ Installing the Necessary Extensions, Libraries, and Compilation tools
 These Tools are what are needed to build the thrift includes and libraries to be used in the server setup:
 
 #. `Visual Studio 2019 Community <https://visualstudio.microsoft.com/vs>`_ (We are using VS 2019 community version to work with our plugins. Ideally at some time in the future this will be changed to the most recent version. Also, Visual Studio will ONLY install to your storage device your Operating System is located on, so be wary if you have limited space on this drive. )
-#. `Developer Command Prompt for VS 2022` This should have downloaded with the main Visual Studio 2019, search for it in the windows search bar
-#. `thrift-0.15.0.exe <http://archive.apache.org/dist/thrift/0.15.0>`__
+#. `Developer Command Prompt for VS 2019` This should have downloaded with the main Visual Studio 2019, search for it in the windows search bar
+#. `thrift-0.15.0.exe <http://archive.apache.org/dist/thrift/0.15.0>`__ 
 
-File Directory setup
-````````````````````
+Side Note on Installation:  During our development, we noticed the `thrift compiler` was not in the master folder from github. As a result the thrift compiler was found and downloaded from 
+https://www.apache.org/dyn/closer.cgi?path=/thrift/0.16.0/thrift-0.16.0.exe 
 
- .. Note:: 
-     
-     I did all of my installations in a directory close to the "C:". My specific path is "C:/src/" Then create separate folders for all of the parts that you need. This is because we will have to access these files from the **Developer Command Prompt** and the shorter the file path the quicker it is to type into a command.
-
-My folders inside of my **"C:/src"** directory looks like this:
-    - `boost`
-    - `Include`
-    - `libevent`
-    - `thrift`
-    - `win_flex_bison`
-
-
-
-.. IMPORTANT::
-    
-    Grabbed this `event-config.h <https://code.woboq.org/linux/include/event2/event-config.h.html>`_ copy pasted the contents into a created `envent-config.h` inside "C:/src/libevent/include" Did this because thrift needs this header, but it was not inside of the libevent on download.
-
-    **Also, I am unsure that this has actually worked on my system. When Debugging this is a decent place to start.**
-
-Creating Thrift Libraries
--------------------------
-Creating the thrift libraries involves opening the solution of libthrift (`thrift.sln`). This should be in **"C:/src/thrift/lib/cpp/thrift/sln"**. This solution has two projects, `libthrift` and `libthriftnb`. 
-
-Our thrift implementation uses `libthrift` so in the solution explorer right click `libthriftnb` and press "Unload Project" 
-
-Placing Includes Together
-`````````````````````````
-
-Next let's make sure that we have the includes in order. 
-
-Create a Folder called **"Include"** inside of the **"src"** directory
-
-
-Creating the Notepad++ Plugin DLL
-----------------------------------
-
-Tutorial 
+Working with your plugins
+--------------------------
 https://npp-user-manual.org/docs/plugins/ 
+- Open CodeChat.vcproj in your Visual Studio.
+- Define your plugin commands number in PluginDefinition.h
+- Customize plugin commands names and associated function name (and the other stuff, optional) in PluginDefinition.cpp.
+- Define the associated functions.
+- Build the files in visual studio. (If you press the "run" button it builds the file, but gives an error, however this is ok because you cant run the .dll outside of Notepad++)
 
-Open CodeChat.vcproj in your Visual Studio.
-Define your plugin commands number in PluginDefinition.h
-Customize plugin commands names and associated function name (and the other stuff, optional) in PluginDefinition.cpp.
-Define the associated functions.
-
-Build the files in visual studio. (If you press the "run" button it builds the file, but gives an error this is ok because you cant run the .dll outside of Notepad++)
-
-Open NotePad++ in debug mode.  (These are the official steps - I could not get the Notepad Debug .exe to work. I just followed the steps with the normal notepad.exe worked)
-    - Download the debug mode 32 bit version here https://notepad-plus-plus.org/assets/pluginListTestTools/npp.debug.x32.zip]
-    - Copy that version of the exe to your Notepad++ program folder
-    - Download https://notepad-plus-plus.org/assets/pluginListTestTools/wingup.release.x32.zip
-    - Copy that version of GUP.exe to Notepad++/updater/
+Open NotePad++
     - Copy the pl.x86.json file from NPP_Extension/basic_plugin into Notepad++/plugins/Config/
     - Select plugins from the top menu and open the plugin folder
     - Create a folder called CodeChat
     - Add your Codechat.dll to the CodeChat folder
-    
- **When working through these steps, I was unable to launch Notepad++ into debug mode. I would receive an error that the software was no longer functional and I would have to install Notepad++ again. I would recommend a more comprehensive way to perform this task.**
 
 CodeChat should appear in the plugins list with the option for a hello world
 Currently the plugin creates a new file that says Hello, Notepad++
@@ -88,9 +45,6 @@ To build the vcpkg follow this `tutorial <https://thrift.apache.org/lib/cpp.html
 
 Creating Thrift Client in Visual Studio
 ----------------------------------------
-In order to use the thrift library, 'vcpkg <https://vcpkg.info/port/thrift>`_ was used to install the thrift library.
-For the developers on this task, we found Visual Studio 2019 to work the best for installation of vcpkg. 
-
 When downloading Visual Studio 2019 the following packages need to be installed to properly install vcpkg.
     - Windows Universal C Runtime: Microsoft.VisualStudio.Component.Windows10SDK
     - C++ core desktop features: Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core
@@ -109,12 +63,9 @@ When downloading Visual Studio 2019 the following packages need to be installed 
     - Visual Studio Build tools for UWP: Microsoft.VisualStudio.ComponentGroup.UWP.VC
     - C++ Desktop Developer Suite
 
-Once the following packages are installed in visual studio, the thrift repository should be downloaded from below
-https://github.com/apache/thrift
-During our development, we noticed the thrift compiler was not in the master folder from github. As a result the thrift compiler was found and downloaded from 
-https://www.apache.org/dyn/closer.cgi?path=/thrift/0.16.0/thrift-0.16.0.exe 
+Once the following packages are installed in visual studio, the thrift repository should be accessed.
 
-The compiler was then placed in the tutorial folder of the thrift directory
+The compiler should be placed in the tutorial folder of the thrift directory
 
 The thrift client was made using the official client example from apache found `here <https://thrift.apache.org/tutorial/cpp.html>`_
 
