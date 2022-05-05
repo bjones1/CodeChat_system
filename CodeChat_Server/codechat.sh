@@ -3,7 +3,7 @@
 # Installs CodeChat
 # test
 # To download this script and automatically run it, run in a terminal (without the # or $ signs):
-# $ wget https://raw.githubusercontent.com/bjones1/CodeChat_system/master/CodeChat_Server/codechat.sh && bash codechat.sh
+# $ wget https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/codechat.sh && bash codechat.sh
 
 # check for Python 3
 if ! hash python3; then

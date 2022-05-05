@@ -30,6 +30,7 @@ Troubleshooting for Windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: ./docs/Powershell_Error.PNG
+    
 
 - If Powershell shows an error informing you that running scripts is forbidden on your system, follow these additional steps
     - Open Powershell in administator mode
@@ -42,7 +43,11 @@ Linux
 -----
 #.  `Open a terminal <https://www.howtogeek.com/howto/22283/four-ways-to-get-instant-access-to-a-terminal-in-linux/>`__.
 
-#.  Highlight this entire command: `wget <https://raw.githubusercontent.com/JoeKenn1118/CodeChat_system/master/CodeChat_Server/codechat.sh && bash codechat.sh>`_ and press Ctrl-C to copy. Go to the terminal window and press Ctrl-Shift-V. Press Enter.
+#.  Highlight and copy this entire command by pressing Ctrl-C: 
+
+    - ``wget https://raw.githubusercontent.com/bjones1/CodeChat_system/installer/CodeChat_Server/codechat.sh && bash codechat.sh``
+
+#. Then go to the terminal window and press Ctrl-Shift-V to paste and press Enter.
 
 or
 
@@ -54,6 +59,9 @@ or
 
 Troubleshooting for Linux
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+If you run into the bdist_wheel issue is an issue that may occur based on your PC or the system that you are using, so it will not hinder anything.
+
+.. figure:: ./docs/Linux_Error.png
 
 - If you don't have permission to run codechat.sh, type ``chmod 700 codechat.sh`` and try again.
 
