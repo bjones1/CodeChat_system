@@ -12,8 +12,6 @@ if ! hash python3; then
 fi
 
 # check python version
-python3 -c 'import sys'
-
 if ! python3 -c 'import sys; assert sys.version_info >= (3,7)' 2> /dev/null; then
     echo "Upgrade Python to version 3.7 or above"
     exit 1
