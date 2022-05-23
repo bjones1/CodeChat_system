@@ -111,12 +111,13 @@ body {
     opacity: 0.5;
 }
 
-/* Class to change the color or error links in CodeChat render */
+/* Class to change the color of error links in CodeChat render */
 .error_link{
 
-
+    color: white;
 }
 
+/* Sets the color of the border and build menu splitter */
 .divider_vertical,
 .divider_horizontal {
   background: #888;
