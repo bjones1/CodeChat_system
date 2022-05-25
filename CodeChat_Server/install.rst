@@ -13,9 +13,6 @@ To install the CodeChat System, install the CodeChat Server and a CodeChat exten
 
 CodeChat Server Installation
 ============================
- .. note:
-
-    Troubleshooting blocks could be condensed and common troubleshooting techniques between OS's merged.
 
 To install the CodeChat Server:
 
@@ -29,20 +26,11 @@ Windows
 
 #. Run ``windows_installer.ps1``
 
-Troubleshooting
-^^^^^^^^^^^^^^^^
-
-.. figure:: ./docs/Powershell_Error.PNG
-
-- If Powershell shows an error informing you that running scripts is forbidden on your system, follow these additional steps
-    - Open Powershell in administator mode
-    - type ``Set-ExecutionPolicy RemoteSigned``
-    - Run Powershell Script again
-
-- If you wish to install your own version of Python make sure you are checking the Add to PATH checkbox on installation
 
 Linux
 -----
+
+.. _install CodeChat Server on Linux:
 
 #.  `Open a terminal <https://www.howtogeek.com/howto/22283/four-ways-to-get-instant-access-to-a-terminal-in-linux/>`__.
 
@@ -55,13 +43,6 @@ or
 #.  `Open a terminal <https://www.howtogeek.com/howto/22283/four-ways-to-get-instant-access-to-a-terminal-in-linux/>`__ in that directory.
 
 #.  Type ``bash codechat.sh``
-
-Troubleshooting
-^^^^^^^^^^^^^^^^
-
-- If you don't have permission to run codechat.sh, type ``chmod 700 codechat.sh`` and try again.
-
-- CodeChat requires `an up-to-date installation of Python 3 <https://www.geeksforgeeks.org/how-to-download-and-install-python-latest-version-on-linux/>`__.
 
 
 
@@ -84,6 +65,32 @@ Mac
 #.  Install the `CodeChat extension/plugin <../extensions/contents>`_ for your IDE or text editor.
 
 To update the CodeChat Server, repeat steps 1, 5, and 6.
+
+
+Troubleshooting
+===============
+
+Windows
+-------
+
+.. figure:: ./docs/Powershell_Error.PNG
+
+- If Powershell shows an error informing you that running scripts is forbidden on your system, follow these additional steps
+    - Open Powershell in administator mode
+    - type ``Set-ExecutionPolicy RemoteSigned``
+    - Run Powershell Script again
+
+- If you wish to install your own version of Python, make sure you are checking the Add to PATH checkbox on installation
+
+Linux
+-----
+
+- If you don't have permission to run codechat.sh, type ``chmod 700 codechat.sh`` and try again.
+
+- CodeChat requires `an up-to-date installation of Python 3 <https://www.geeksforgeeks.org/how-to-download-and-install-python-latest-version-on-linux/>`__.
+
+
+
 
 
 CodeChat extension/plugin installation
