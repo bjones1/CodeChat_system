@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# Installs CodeChat
-
-#  To run this script, see the `Linux installation instructions <install CodeChat Server on Linux>`.
+# *****************************************************************************
+# |codechat.sh| - The CodeChat System install script (Linux)
+# *****************************************************************************
+# This file downloads and installs CodeChat. To run this script,
+# see the `Linux installation instructions <install CodeChat Server on Linux>`.
+# *****************************************************************************
 
 # check for Python 3
 if ! hash python3; then
