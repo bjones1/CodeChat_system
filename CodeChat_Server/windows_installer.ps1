@@ -135,7 +135,7 @@ else{
 }
 
 
-# ==== Now done inside venv ====
+# ==== to be done inside venv ====
 # Make sure pip, the Python installer, is up to date on Windows
 # echo "Upgrading pip..."
 # python -m pip install --upgrade pip
@@ -160,11 +160,11 @@ else{
     "
 }
 
-# ==== No longer activating venv, just running ====
-# Activate the virtual environment
-echo "Activating Virtual environment"
-.\codechat\Scripts\activate
-echo "Virtual Environment Activated"
+## ==== No longer activating venv, just running ====
+## Activate the virtual environment
+# echo "Activating Virtual environment"
+# .\codechat\Scripts\activate
+# echo "Virtual Environment Activated"
 
 
 
