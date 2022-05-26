@@ -1,7 +1,6 @@
 
 # Windows PowerShell Installation Script
 # **************************************
-# Used to allow powershell to run scripts, may be rendered unnecessary in future if workaround is found
 # 
 # Important Links
 # ===============
@@ -14,7 +13,7 @@
 # 
 # General Notes
 # =============
-# - Issues: may Need to let user decide file storage location and allow access to said location
+# - Issues: may need to let user decide file storage location and allow access to said location
 # 
 # To Do
 # =====
@@ -23,7 +22,6 @@
 # 
 # Script
 # ======
-# Does the work to install everything we need
 # 
 # Pre-Script Definitions
 # ----------------------
@@ -163,7 +161,7 @@ else{
     "
 }
 
-echo "Activating Virutal enviroment"
+echo "Activating Virtual enviroment"
 # Activate the virtual enviroment
 .\codechat\Scripts\activate
 echo "Virtual Enviroment Activated
