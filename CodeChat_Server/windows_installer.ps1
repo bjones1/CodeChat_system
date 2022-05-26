@@ -134,13 +134,12 @@ else{
     echo "Acceptable Version of Python found:"
 }
 
-# Pip Installation
-# ----------------
+
+# ==== Now done inside venv ====
 # Make sure pip, the Python installer, is up to date on Windows
-echo "Upgrading pip..."
-python -m pip install --upgrade pip
-echo "
-"
+# echo "Upgrading pip..."
+# python -m pip install --upgrade pip
+# echo " "
 
 # Going to the user dir
 cd $env:USERPROFILE
@@ -161,11 +160,13 @@ else{
     "
 }
 
-echo "Activating Virtual enviroment"
+# ==== No longer activating venv, just running ====
+# echo "Activating Virtual enviroment"
 # Activate the virtual enviroment
-.\codechat\Scripts\activate
-echo "Virtual Enviroment Activated
-"
+# .\codechat\Scripts\activate
+# echo "Virtual Enviroment Activated"
+
+
 
 # find CodeChat_Server.exe and tell user if just updating or installing
 # This could probably be changed, so that it doesn't differentiate seeing as both paths do that same thing.
@@ -173,14 +174,14 @@ $CodeChat_Server = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server
 if([string]::IsNullOrEmpty($CodeChat_Server)){
     # Install the CodeChat Server
     echo "installing CodeChat_Server"
-    python -m pip install --upgrade CodeChat_Server
+    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
     echo "CodeChat_Server Sucessfully Installed
     "
 }
 else{
     # Update the CodeChat Server
     echo "CodeChat_Server found, running update"
-    python -m pip install --upgrade CodeChat_Server
+    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
     echo "CodeChat_Server sucessfully updated
     "
 }
