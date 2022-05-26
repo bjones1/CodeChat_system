@@ -174,14 +174,16 @@ $CodeChat_Server = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server
 if([string]::IsNullOrEmpty($CodeChat_Server)){
     # Install the CodeChat Server
     echo "installing CodeChat_Server"
-    python -m pip install --upgrade CodeChat_Server
+    # python -m pip install --upgrade CodeChat_Server
+    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
     echo "CodeChat_Server Sucessfully Installed
     "
 }
 else{
     # Update the CodeChat Server
     echo "CodeChat_Server found, running update"
-    python -m pip install --upgrade CodeChat_Server
+    # python -m pip install --upgrade CodeChat_Server
+    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
     echo "CodeChat_Server sucessfully updated"
 }
 
