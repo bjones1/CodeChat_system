@@ -161,10 +161,10 @@ else{
 }
 
 # ==== No longer activating venv, just running ====
-# echo "Activating Virtual enviroment"
-# Activate the virtual enviroment
-# .\codechat\Scripts\activate
-# echo "Virtual Enviroment Activated"
+echo "Activating Virtual enviroment"
+Activate the virtual enviroment
+.\codechat\Scripts\activate
+echo "Virtual Enviroment Activated"
 
 
 
