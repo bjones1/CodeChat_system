@@ -161,10 +161,10 @@ else{
 }
 
 # ==== No longer activating venv, just running ====
-echo "Activating Virtual enviroment"
-Activate the virtual enviroment
+# Activate the virtual environment
+echo "Activating Virtual environment"
 .\codechat\Scripts\activate
-echo "Virtual Enviroment Activated"
+echo "Virtual Environment Activated"
 
 
 
@@ -174,16 +174,15 @@ $CodeChat_Server = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server
 if([string]::IsNullOrEmpty($CodeChat_Server)){
     # Install the CodeChat Server
     echo "installing CodeChat_Server"
-    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
+    python -m pip install --upgrade CodeChat_Server
     echo "CodeChat_Server Sucessfully Installed
     "
 }
 else{
     # Update the CodeChat Server
     echo "CodeChat_Server found, running update"
-    \codechat\Scripts\python -m pip install --upgrade CodeChat_Server
-    echo "CodeChat_Server sucessfully updated
-    "
+    python -m pip install --upgrade CodeChat_Server
+    echo "CodeChat_Server sucessfully updated"
 }
 
 # I decided to add an automatic download of the myst parser, because if you're working on codechat you will need it.
