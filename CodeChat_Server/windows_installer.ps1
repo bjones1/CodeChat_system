@@ -200,6 +200,7 @@ $pathToCodeChat = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server 
 Set-Clipboard $pathToCodeChat
 echo "Here is your path to CodeChat (Also copied to your clipboard): $pathToCodeChat"
 
+
 # Exit the Script
-Read-Host -Prompt "Press Enter to exit"
+# Read-Host -Prompt "Press Enter to exit"
 
