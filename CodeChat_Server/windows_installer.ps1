@@ -152,11 +152,11 @@ $codechat = Get-Item codechat
 if([string]::IsNullOrEmpty($codechat)){
     # Create a virtual enviroment named codechat
     python -m venv codechat
-    echo "Virtual Enviroment Created Sucessfully
+    echo "virtual environment successfully created
     "
 }
 else{
-    echo "'codechat' virtual enviroment already found, skipping this step
+    echo "'codechat' virtual environment already found, skipping this step
     "
 }
 
@@ -176,7 +176,7 @@ if([string]::IsNullOrEmpty($CodeChat_Server)){
     echo "installing CodeChat_Server"
     # python -m pip install --upgrade CodeChat_Server
     codechat\Scripts\python -m pip install --upgrade CodeChat_Server
-    echo "CodeChat_Server Sucessfully Installed
+    echo "CodeChat_Server successfully installed
     "
 }
 else{
@@ -184,15 +184,15 @@ else{
     echo "CodeChat_Server found, running update"
     # python -m pip install --upgrade CodeChat_Server
     codechat\Scripts\python -m pip install --upgrade CodeChat_Server
-    echo "CodeChat_Server sucessfully updated"
+    echo "CodeChat_Server successfully updated"
 }
 
 # I decided to add an automatic download of the myst parser, because if you're working on codechat you will need it.
-$MystParser = python -m pip show myst-parser
-if([string]::IsNullOrEmpty($MystParser)){
-    echo "Did not find myst_parser installing..."
-    python -m pip install myst-parser
-}
+# $MystParser = python -m pip show myst-parser
+# if([string]::IsNullOrEmpty($MystParser)){
+#    echo "Did not find myst_parser installing..."
+#    python -m pip install myst-parser
+#}
 
 
 # `Set-Clipboard <https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-clipboard?view=powershell-7.2>`_: Copies path of CodeChat_Server to the clipboard for easy pasting and displays path in terminal
