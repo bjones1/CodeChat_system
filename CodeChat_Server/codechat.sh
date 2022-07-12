@@ -32,4 +32,4 @@ codechat/bin/python3 -m pip install --upgrade CodeChat_Server
 echo
 echo "CodeChat installation complete!"
 echo "Install directory: ${PWD}/codechat/bin"
-echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/CodeChat_Server/install.html#codechat-server-installation"
+echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/extensions/contents.html"

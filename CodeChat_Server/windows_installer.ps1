@@ -199,7 +199,7 @@ else{
 $pathToCodeChat = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server | Select-Object -ExpandProperty Definition
 Set-Clipboard $pathToCodeChat
 echo "Here is your path to CodeChat (Also copied to your clipboard): $pathToCodeChat"
-echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/CodeChat_Server/install.html#codechat-server-installation"
+echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/extensions/contents.html"
 
 
 # Exit the Script
