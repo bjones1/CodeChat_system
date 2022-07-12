@@ -22,6 +22,9 @@ fi
 # install / upgrade pip
 python3 -m pip install --user --upgrade pip
 
+# install python3-venv
+sudo apt install python3-venv
+
 # create virtual environment
 python3 -m venv codechat
 
