@@ -18,12 +18,21 @@ $pythonVersionReqArray = '3','7','0'
 # 
 
 
-<#
 # 
 # Seeing if any Version of Python is Installed
 # --------------------------------------------
 # Get-Command -all will search for any python executable (denoting an installation)
 $PythonVersion = Get-Command -all python -erroraction 'silentlycontinue'
+
+# just to see what's going on here
+
+Get-Command python
+
+Get-Command -all python
+
+Get-Command python | Format-List
+
+<#
 # If the command does not return a string (with the python.exe) we have to do some stuff
 if([string]::IsNullOrEmpty($pythonVersion)){
     # Asking the user if they would like to have python installed on their system
@@ -110,6 +119,7 @@ else{
 # Going to the user dir
 cd $env:USERPROFILE
 
+<#
 # Creating codechat venv
 # ----------------------
 # We do this so that our installation does not mess with any other installations of python
@@ -155,3 +165,4 @@ echo "Now add this path to your plugin's setup - see https://codechat-system.rea
 
 # Exit the Script
 
+#>
