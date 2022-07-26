@@ -21,16 +21,22 @@ $pythonVersionReqArray = '3','7','0'
 # 
 # Seeing if any Version of Python is Installed
 # --------------------------------------------
+
+# ----none of these work and all report version 0.0.0.0
 # Get-Command -all will search for any python executable (denoting an installation)
-$PythonVersion = Get-Command -all python -erroraction 'silentlycontinue'
+# $PythonVersion = Get-Command -all python -erroraction 'silentlycontinue'
 
-# just to see what's going on here
 
-Get-Command python
+# Get-Command python
 
-Get-Command -all python
+# Get-Command -all python
 
-Get-Command python | Format-List
+# Get-Command python | Format-List
+
+# echo $PythonVersion
+
+# at least displays correct version
+python --version
 
 <#
 # If the command does not return a string (with the python.exe) we have to do some stuff
