@@ -9,38 +9,37 @@
 # Automatically moves Powershell to the user directory, works better when using powershell as an admin as the default admin location is in "Windows/System32"
 cd $env:USERPROFILE
 # 
-# We're doing our own error handling, don't need a bunch of red for user where there doesn't need to be
+# We're doing our own error handling
 $ErrorActionPreference = 'silentlycontinue'
 # 
 # Version of python required, put into both string and array from to be easier to parse and output
 $pythonVersionReq = '3.7.0'
 $pythonVersionReqArray = '3','7','0'
-# 
+ 
 
 
 # 
-# Seeing if any Version of Python is Installed
+# Checking if Python is Installed
 # --------------------------------------------
 
-# ----none of these work and all report version 0.0.0.0
-# Get-Command -all will search for any python executable (denoting an installation)
-# $PythonVersion = Get-Command -all python -erroraction 'silentlycontinue'
 
+$pythonVersion = python --version
 
-# Get-Command python
+# No python at all
 
-# Get-Command -all python
-
-# Get-Command python | Format-List
-
-# echo $PythonVersion
-
-# at least displays correct version
-python --version
-
-<#
-# If the command does not return a string (with the python.exe) we have to do some stuff
 if([string]::IsNullOrEmpty($pythonVersion)){
+    
+    cls;    # clear screen to hide confusing or conflicting powershell error message(s)
+    
+    echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
+    
+    write-host "`n"     # blank line
+    
+    Exit;   # abort script
+        
+    }
+    
+<#
     # Asking the user if they would like to have python installed on their system
     $response = Read-Host -Prompt "You do not have Python installed, would you like to install the required version ($pythonVersionReq) (y/n)?"
     if($response -eq "y"){
