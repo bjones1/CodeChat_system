@@ -23,50 +23,44 @@ $pythonVersionReqArray = '3','7','0'
 # --------------------------------------------
 
 
-$pythonVersion = python --version
+# Send python version via stderr to a text file:
+
+python --version 2> err.txt
+
+# store into a variable
+
+$pythonVersion = Get-Content .\err.txt 
+ 
+$py = $pythonVersion[0]
 
 # No python at all
 
-if([string]::IsNullOrEmpty($pythonVersion)){
+if([string]::IsNullOrEmpty($py)){
     
-    cls;    # clear screen to hide confusing or conflicting powershell error message(s)
+    # cls    # clear screen to hide confusing or conflicting powershell error message(s)
     
     echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
     
-    write-host "`n"     # blank line
+    echo "`n"     # blank line
     
-    Exit;   # abort script
+    Exit   # abort script
         
     }
+
+
+# Python 2
+# "python : Python 2.7.14"
+
+if(($py[0] -ceq "p") -and ($py[9] -ceq "P") -and ($py[16] -eq "2")) {
     
+    echo "Python 2"
+    
+    }
+
+
 <#
-    # Asking the user if they would like to have python installed on their system
-    $response = Read-Host -Prompt "You do not have Python installed, would you like to install the required version ($pythonVersionReq) (y/n)?"
-    if($response -eq "y"){
-        echo "Downloading Python Version $PyTarget"
-        # Downloading Python Unsure if ``-UseDefaulCredential`` is necessary
-        # Using Invoke-WebRequest because I couldn't get the other method outlined in the `tutorial <https://lazyadmin.nl/powershell/download-file-powershell>`_ working guide says it's faster though...
-        Invoke-WebRequest -Uri $PythonURL -OutFile $PythonDest -UseDefaultCredential
-        echo "Python Version $PyTarget Downloaded
-        Installing Python"
-        Read-Host "Press any button to continue, then click 'Install Now' in popup"
-        # 
-        # Redirecting to downloads so that we can run our installation
-        cd $env:USERPROFILE\Downloads
-        # 
-        # Installs Python ``Out-Null`` option makes sure the program doesn't continue before the installation completes, The ``/quietly`` just makes no window pop up, which is fine because ``PrependPath=1`` will select the PATH checkbox for us.  
-        # Potentially Install-Package could be a better fit, not sure if it only works on Powershell Modules or other exe's too
-        Start-Process ".\python-$PyTarget-amd64.exe" -ArgumentList /quietly,PrependPath=1 -Wait
-        echo "Python Version $PyTarget Installed Successfully
-        "
-    }
-    # If they don't have python and they don't want us to do it all we can do is let them know what the minimum version to get is
-    else{
-        echo "Please install the minimum required version of python ($pythonVersionReq) or later
-        (Be sure to add to the PATH)"
-        exit
-    }
-}
+   
+
 # Returning to User Dir
 cd $env:USERPROFILE
 # |
