@@ -66,6 +66,16 @@ if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "2")) {
 
 # ms-windows-store://pdp/?ProductId=9PJPW5LDXLZ5
 
+# Python 3
+# "Python 3.10.6"
+
+if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
+    
+    echo "Python 3"
+    
+    }
+
+
 <#
    
 
