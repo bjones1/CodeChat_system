@@ -10,7 +10,7 @@
 cd $env:USERPROFILE
 # 
 # We're doing our own error handling
-$ErrorActionPreference = 'silentlycontinue'
+# $ErrorActionPreference = 'silentlycontinue'
 # 
 # Version of python required, put into both string and array from to be easier to parse and output
 $pythonVersionReq = '3.7.0'
@@ -23,22 +23,29 @@ $pythonVersionReqArray = '3','7','0'
 # --------------------------------------------
 
 
-# Send python version via stderr to a text file:
+$pythonVersion = python --version 2>&1 | %{ "$_" }
 
-python --version 2> err.txt
 
-# store into a variable
+# no python
 
-$pythonVersion = Get-Content .\err.txt 
- 
-$py = $pythonVersion[0]
-
-# No python at all
-
-if([string]::IsNullOrEmpty($py)){
+## sometimes variable is empty
+if([string]::IsNullOrEmpty($pythonVersion)){
     
     # cls    # clear screen to hide confusing or conflicting powershell error message(s)
+  
+    echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
     
+    echo "`n"     # blank line
+    
+    Exit   # abort script
+        
+    }
+
+## other times contains "Python was not found... 
+if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "w")) {
+    
+    # cls    # clear screen to hide confusing or conflicting powershell error message(s)
+  
     echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
     
     echo "`n"     # blank line
@@ -49,14 +56,15 @@ if([string]::IsNullOrEmpty($py)){
 
 
 # Python 2
-# "python : Python 2.7.14"
+# "Python 2.7.14"
 
-if(($py[0] -ceq "p") -and ($py[9] -ceq "P") -and ($py[16] -eq "2")) {
+if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "2")) {
     
     echo "Python 2"
     
     }
 
+# ms-windows-store://pdp/?ProductId=9PJPW5LDXLZ5
 
 <#
    
