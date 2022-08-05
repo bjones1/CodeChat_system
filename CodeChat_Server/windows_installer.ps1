@@ -2,7 +2,7 @@
 # Windows PowerShell Installation Script
 # **************************************
 # 
-# 
+# PowerShell.exe -ExecutionPolicy Bypass -File .\win.ps1
 # 
 # Pre-Script Definitions
 # ----------------------
@@ -75,6 +75,23 @@ if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
     
     }
 
+
+
+# Python 3 < 3.7
+
+$pythonVersion = $pythonVersion.Split()[1]
+$pythonVersionMaj = $pythonVersion.Split('.')[0]
+$pythonVersionMin = $pythonVersion.Split('.')[1]
+
+
+if($pythonVersionMin -lt $pythonVersionReqArray[1]) {
+    
+    echo "Old Python 3"
+    
+    }
+
+# $pythonVersionReqArray = '3','7','0'
+# echo $pythonVersion
 
 <#
    
