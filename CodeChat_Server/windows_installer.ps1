@@ -40,16 +40,16 @@ $pythonVersion = $pythonVersion.Split()[1]
 $pythonVersionMaj = $pythonVersion.Split('.')[0]
 $pythonVersionMin = $pythonVersion.Split('.')[1]
 
-# Python 2
+# Case 2: Python 2
+# -----------------
 # "Python 2.7.14"
 
-if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "2")) {
+# if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "2")) {
+if($pythonVersionMaj -lt $pythonVersionReqArray[0]) {
     
-    echo "Python 2"
+    echo "Python $pythonVersionReq or later required. Install Python 3 from Microsoft Store (https://apps.microsoft.com/store/detail/python-310/9PJPW5LDXLZ5?hl=en-us&gl=US), then rerun script."
     
     }
-
-# ms-windows-store://pdp/?ProductId=9PJPW5LDXLZ5
 
 # Python 3
 # "Python 3.10.6"
@@ -59,8 +59,6 @@ if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
     echo "Python 3"
     
     }
-
-
 
 # Python 3 < 3.7
 
