@@ -61,7 +61,7 @@ if($pythonVersionMaj -lt $pythonVersionReqArray[0]) {
 # -------------------------
 # "Python 3.6.7"
 
-if($pythonVersionMin -lt $pythonVersionReqArray[1]) {
+if([int]$pythonVersionMin -lt [int]$pythonVersionReqArray[1]) {
     
     cls    
     
@@ -77,74 +77,28 @@ if($pythonVersionMin -lt $pythonVersionReqArray[1]) {
 # -----------------
 # "Python 3.10.6"
 
- if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
+if(([int]$pythonVersionMaj -eq [int]$pythonVersionReqArray[0]) -and ([int]$pythonVersionMin -ge [int]$pythonVersionReqArray[1])) {
+
+    echo "python ok"
+    $pythonOK = $true
     
-    echo "Python 3"
+    }
+else {
+    
+    echo $pythonVersion
+    
+    echo "Unable to detect Python version. Check that Python $pythonVersionReq or later is installed, and that it is present in the path"
+    
+    Exit   # abort script
     
     }
 
 # $pythonVersionReqArray = '3','7','0'
 # echo $pythonVersion
 
-<#
-   
-
-# Returning to User Dir
-cd $env:USERPROFILE
-# |
-# 
-# Grabbing the version of python and splitting it up so as to make parsing easier
-$pythonVersion = python --version
-$pythonVersion = $pythonVersion.Split()[1]
-$pythonVersionMaj = $pythonVersion.Split('.')[0]
-$pythonVersionMin = $pythonVersion.Split('.')[1]
-
-# Version Checking
-# if the version we have is not greater than or equal to the required version, an updated version must be installed
-# checking negative case so that if it evaluates as true (version is less than required) then throw warning
-$InstallBool = False;
-if ($pythonVersionMaj -lt $pythonVersionReqArray[0]){
-    $InstallBool = True
-}
-elseif($pythonVersionMaj -eq $pythonVersionReqArray[0]){
-    if($pythonVersionMaj -lt $pythonVersionReqArray[1]){
-        $InstallBool = True
-    }
-}
-
-if($InstallBool){
-    $response = Read-Host -Prompt "You do not have the correct version of Python installed, would you like the script to install the required version ($pythonVersionReq) (y/n)?"
-    if($response -eq "y"){
-        echo "Downloading Python Version $PyTarget"
-        # Downloading Python Unsure if ``-UseDefaulCredential`` in necessary
-        Invoke-WebRequest -Uri $PythonURL -OutFile $PythonDest -UseDefaultCredential
-        echo "Python Version$PyTarget Downloaded
-        
-        Installing Python"
-        Read-Host "Press any button to continue, then click 'Install Now' in popup"
-        cd $env:USERPROFILE\Downloads
-
-        # Installs Python ``Out-Null`` option makes sure the program doesn't continue before the installation completes Using Start-Process over just using the cmd because it allows me to input a string, so we can easily change the target python version. 
-        Start-Process ".\python-$PyTarget-amd64.exe" -ArgumentList /quietly,PrependPath=1 -Wait
-
-        echo "Python Version $PyTarget Installed Successfully
-        "
-    }
-    else{
-        echo "Please install the required version of python: $pythonVersionReq or later
-        "
-        exit
-    }
-}
-else{
-    echo "Acceptable version of Python found"
-}
-
-#>
-
 
 # Going to the user dir
-cd $env:USERPROFILE
+# cd $env:USERPROFILE
 
 <#
 # Creating codechat venv
