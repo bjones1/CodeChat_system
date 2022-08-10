@@ -12,6 +12,7 @@ cd $env:USERPROFILE
 # Version of python required, put into both string and array form to be easier to parse and output
 $pythonVersionReq = '3.7.0'
 $pythonVersionReqArray = '3','7','0'
+$pythonOK = $false
  
 # 
 # Checking if Python is Installed
@@ -67,9 +68,9 @@ if([int]$pythonVersionMin -lt [int]$pythonVersionReqArray[1]) {
     
     echo "Python $pythonVersionReq or later required. Update Python or install latest version from Microsoft Store (https://apps.microsoft.com/store/detail/python-310/9PJPW5LDXLZ5?hl=en-us&gl=US), then rerun script."
     
-    echo "`n"     # blank line
+    echo "`n"     
     
-    Exit   # abort script
+    Exit   
     
     }
 
@@ -79,7 +80,7 @@ if([int]$pythonVersionMin -lt [int]$pythonVersionReqArray[1]) {
 
 if(([int]$pythonVersionMaj -eq [int]$pythonVersionReqArray[0]) -and ([int]$pythonVersionMin -ge [int]$pythonVersionReqArray[1])) {
 
-    echo "python ok"
+    # echo "python ok"
     $pythonOK = $true
     
     }
@@ -89,61 +90,47 @@ else {
     
     echo "Unable to detect Python version. Check that Python $pythonVersionReq or later is installed, and that it is present in the path"
     
-    Exit   # abort script
+    Exit
     
     }
 
-# $pythonVersionReqArray = '3','7','0'
-# echo $pythonVersion
-
-
-# Going to the user dir
-# cd $env:USERPROFILE
-
-<#
 # Creating codechat venv
 # ----------------------
-# We do this so that our installation does not mess with any other installations of python
-echo "Creating codechat venv..."
-$codechat = Get-Item codechat
-if([string]::IsNullOrEmpty($codechat)){
-    # Create a virtual enviroment named codechat
-    python -m venv codechat
-    echo "virtual environment successfully created
-    "
+## We do this so that our installation does not mess with any other installations of python
+
+if ($pythonOK) {
+    echo "Creating codechat venv..."
+    $codechat = Get-Item codechat -ErrorAction SilentlyContinue
+    if([string]::IsNullOrEmpty($codechat)){
+        # Create a virtual enviroment named codechat
+        python -m venv codechat
+        echo "virtual environment successfully created"
+    }
+    else {
+        echo "'codechat' virtual environment already found, skipping this step"
+    }
+
+    # find CodeChat_Server.exe and tell user if just updating or installing
+
+    $CodeChat_Server = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server -ErrorAction SilentlyContinue
+    if([string]::IsNullOrEmpty($CodeChat_Server)){
+        # Install the CodeChat Server
+        echo "installing CodeChat_Server"
+        codechat\Scripts\python -m pip install --upgrade CodeChat_Server
+        echo "CodeChat_Server successfully installed"
+    }
+    else {
+        # Update the CodeChat Server
+        echo "CodeChat_Server found, running update"
+        codechat\Scripts\python -m pip install --upgrade CodeChat_Server
+        echo "CodeChat_Server successfully updated"
+    }
+
+    # Copies path of CodeChat_Server to the clipboard for easy pasting and displays path in terminal
+    $pathToCodeChat = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server | Select-Object -ExpandProperty Definition
+    Set-Clipboard $pathToCodeChat
+    echo "Here is your path to CodeChat (Also copied to your clipboard): $pathToCodeChat"
+    echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/extensions/contents.html"
 }
-else{
-    echo "'codechat' virtual environment already found, skipping this step
-    "
-}
 
-# find CodeChat_Server.exe and tell user if just updating or installing
-# This could probably be changed, so that it doesn't differentiate seeing as both paths do that same thing.
-$CodeChat_Server = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server
-if([string]::IsNullOrEmpty($CodeChat_Server)){
-    # Install the CodeChat Server
-    echo "installing CodeChat_Server"
-    # python -m pip install --upgrade CodeChat_Server
-    codechat\Scripts\python -m pip install --upgrade CodeChat_Server
-    echo "CodeChat_Server successfully installed
-    "
-}
-else{
-    # Update the CodeChat Server
-    echo "CodeChat_Server found, running update"
-    # python -m pip install --upgrade CodeChat_Server
-    codechat\Scripts\python -m pip install --upgrade CodeChat_Server
-    echo "CodeChat_Server successfully updated"
-}
-
-
-# `Set-Clipboard <https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-clipboard?view=powershell-7.2>`_: Copies path of CodeChat_Server to the clipboard for easy pasting and displays path in terminal
-$pathToCodeChat = Get-Command $env:USERPROFILE\codechat\Scripts\CodeChat_Server | Select-Object -ExpandProperty Definition
-Set-Clipboard $pathToCodeChat
-echo "Here is your path to CodeChat (Also copied to your clipboard): $pathToCodeChat"
-echo "Now add this path to your plugin's setup - see https://codechat-system.readthedocs.io/en/latest/extensions/contents.html"
-
-
-# Exit the Script
-
-#>
+else {Exit}
