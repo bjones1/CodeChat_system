@@ -6,54 +6,39 @@
 # 
 # Pre-Script Definitions
 # ----------------------
-# Automatically moves Powershell to the user directory, works better when using powershell as an admin as the default admin location is in "Windows/System32"
+# Automatically moves Powershell to the user directory; when using powershell as an admin as the default admin location is in "Windows/System32"
 cd $env:USERPROFILE
 # 
-# We're doing our own error handling
-# $ErrorActionPreference = 'silentlycontinue'
-# 
-# Version of python required, put into both string and array from to be easier to parse and output
+# Version of python required, put into both string and array form to be easier to parse and output
 $pythonVersionReq = '3.7.0'
 $pythonVersionReqArray = '3','7','0'
  
-
-
 # 
 # Checking if Python is Installed
-# --------------------------------------------
-
+# ===============================
 
 $pythonVersion = python --version 2>&1 | %{ "$_" }
 
 
-# no python
+# Case 1: No Python
+# -----------------
 
-## sometimes variable is empty
-if([string]::IsNullOrEmpty($pythonVersion)){
+## sometimes variable is empty other times contains "Python was not found..." 
+if(([string]::IsNullOrEmpty($pythonVersion)) -or (($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "w"))) {
     
-    # cls    # clear screen to hide confusing or conflicting powershell error message(s)
-  
+    cls    # clear screen to hide confusing or conflicting powershell error message(s)
+    
     echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
     
     echo "`n"     # blank line
     
     Exit   # abort script
-        
+    
     }
 
-## other times contains "Python was not found... 
-if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "w")) {
-    
-    # cls    # clear screen to hide confusing or conflicting powershell error message(s)
-  
-    echo "Python $pythonVersionReq or later required. Type 'python' and press Enter to install from Microsoft Store, then rerun script."
-    
-    echo "`n"     # blank line
-    
-    Exit   # abort script
-        
-    }
-
+$pythonVersion = $pythonVersion.Split()[1]
+$pythonVersionMaj = $pythonVersion.Split('.')[0]
+$pythonVersionMin = $pythonVersion.Split('.')[1]
 
 # Python 2
 # "Python 2.7.14"
@@ -79,10 +64,11 @@ if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
 
 # Python 3 < 3.7
 
+<#
 $pythonVersion = $pythonVersion.Split()[1]
 $pythonVersionMaj = $pythonVersion.Split('.')[0]
 $pythonVersionMin = $pythonVersion.Split('.')[1]
-
+#>
 
 if($pythonVersionMin -lt $pythonVersionReqArray[1]) {
     
