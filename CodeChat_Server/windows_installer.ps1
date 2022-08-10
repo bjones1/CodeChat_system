@@ -36,41 +36,50 @@ if(([string]::IsNullOrEmpty($pythonVersion)) -or (($pythonVersion[0] -ceq "P") -
     
     }
 
-$pythonVersion = $pythonVersion.Split()[1]
-$pythonVersionMaj = $pythonVersion.Split('.')[0]
-$pythonVersionMin = $pythonVersion.Split('.')[1]
+## split pythonVersion variable into an array 
+$pythonVersion = $pythonVersion.Split()[1]  # 3.10.6
+$pythonVersionMaj = $pythonVersion.Split('.')[0] # 3
+$pythonVersionMin = $pythonVersion.Split('.')[1] # 10
 
 # Case 2: Python 2
 # -----------------
 # "Python 2.7.14"
 
-# if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "2")) {
 if($pythonVersionMaj -lt $pythonVersionReqArray[0]) {
+
+    cls   
     
     echo "Python $pythonVersionReq or later required. Install Python 3 from Microsoft Store (https://apps.microsoft.com/store/detail/python-310/9PJPW5LDXLZ5?hl=en-us&gl=US), then rerun script."
     
-    }
-
-# Python 3
-# "Python 3.10.6"
-
-if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
+    echo "`n"     
     
-    echo "Python 3"
+    Exit   
     
     }
 
-# Python 3 < 3.7
-
-<#
-$pythonVersion = $pythonVersion.Split()[1]
-$pythonVersionMaj = $pythonVersion.Split('.')[0]
-$pythonVersionMin = $pythonVersion.Split('.')[1]
-#>
+# Case 3: Outdated Python 3
+# -------------------------
+# "Python 3.6.7"
 
 if($pythonVersionMin -lt $pythonVersionReqArray[1]) {
     
-    echo "Old Python 3"
+    cls    
+    
+    echo "Python $pythonVersionReq or later required. Update Python or install latest version from Microsoft Store (https://apps.microsoft.com/store/detail/python-310/9PJPW5LDXLZ5?hl=en-us&gl=US), then rerun script."
+    
+    echo "`n"     # blank line
+    
+    Exit   # abort script
+    
+    }
+
+# Case 4: Python 3
+# -----------------
+# "Python 3.10.6"
+
+ if(($pythonVersion[0] -ceq "P") -and ($pythonVersion[7] -eq "3")) {
+    
+    echo "Python 3"
     
     }
 
