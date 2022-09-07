@@ -2,12 +2,6 @@
 # |docname| - Windows PowerShell Installation Script
 # **************************************************
 #
-# .. note::
-#
-#   What is this for?
-#
-# PowerShell.exe -ExecutionPolicy Bypass -File .\win.ps1
-#
 # Pre-Script Definitions
 # ----------------------
 # Automatically moves PowerShell to the user directory; when using Powershell as an admin as the default admin location is in ``Windows/System32``.
@@ -21,7 +15,9 @@ $pythonVersionReqArray = '3','7','0'
 # Checking if Python is Installed
 # ===============================
 # .. note::
-#   TODO: Explain this ``| %{ "$_" }`` magic.
+# 2>&1 Sends errors (2) and success output (1) to the success output stream. (PS> man about_Redirection)
+# %{ "$_" } converts objects on the error stream to strings
+# (https://stackoverflow.com/questions/10666101/lastexitcode-0-but-false-in-powershell-redirecting-stderr-to-stdout-gives/12866669) 
 $pythonVersion = python --version 2>&1 | %{ "$_" }
 
 # Case 1: No Python
