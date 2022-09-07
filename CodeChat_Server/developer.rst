@@ -6,6 +6,8 @@ Developer documentation
 
     CodeChat_Server/__init__.py
     setup.py
+    linux_installer.sh
+    windows_installer.ps1
     tests/contents
 
 
