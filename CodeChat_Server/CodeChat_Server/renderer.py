@@ -617,7 +617,7 @@ async def _run_subprocess(
         return "", "external command:: ERROR:When running. {}".format(e)
 
     return (
-        stdout and stdout.decode("utf-8", errors="backslashreplace"),
+        stdout.decode("utf-8", errors="backslashreplace") if stdout else "",
         stderr.decode("utf-8", errors="backslashreplace"),
     )
 
