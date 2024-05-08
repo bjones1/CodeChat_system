@@ -15,6 +15,10 @@ Change Log
 
     -   No changes.
 
+-   0.2.22, 8-May-2024:
+
+    -   Use the `CherryPy <https://docs.cherrypy.dev/en/latest/index.html>`_ web framework, to work around CodeSpaces problems.
+
 -   0.2.21, 8-Nov-2023:
 
     -   Recognize PreTeXt error messages.
