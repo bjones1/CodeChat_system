@@ -161,6 +161,7 @@ setup(
     install_requires=(
         [
             "bottle",
+            "cherrypy",
             "CodeChat",
             "json-five",
             "markdown",

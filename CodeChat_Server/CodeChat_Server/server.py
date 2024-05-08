@@ -29,6 +29,7 @@
 #
 # Standard library
 # ----------------
+import cherrypy
 import logging
 import os
 from pathlib import Path
@@ -376,7 +377,7 @@ def run_servers(
     insecure = insecure or bool(handler.cocalc_project_id)
     handler.insecure = insecure
 
-    # Make the websocket port public if running in a codespace. To detect if we're running in the codespace, see the `docs <https://docs.github.com/en/codespaces/developing-in-codespaces/default-environment-variables-for-your-codespace>`_.
+    # Make the websocket port public if running in a codespace. To detect if we're running in the codespace, see the `docs <https://docs.github.com/en/codespaces/developing-in-codespaces/default-environment-variables-for-your-codespace>`__.
     if os.environ.get("CODESPACES") == "true":
         # Per the `docs <https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace#sharing-a-port>`__, a private port requires an access token that's VSCode automatically sends over (I assume) HTTP/HTTPS. Therefore, the HTTP port this server uses works when private. In contrast, a public port doesn't require the token, so I'm guessing  this works with non-HTTP protocols such as websockets. When this is private, the websocket never connects. The code below configures this.
         #
@@ -406,19 +407,33 @@ def run_servers(
     )
     editor_plugin_thread.start()
 
-    def webserver_launcher(*args, **kwargs):
+    server_host = "0.0.0.0" if insecure else LOCALHOST
+
+    def webserver_launcher():
         try:
-            # Omitting the ``quiet`` option causes the server Bottle uses by default (Python's stdlib wsgiref) to die when emitting stdio if run with the ``CodeChat_Server start`` option (where the stdio/stderr gets disconnected after the server is started). Therefore, the ``CodeChat_Server start`` command always invokes ``CodeChat_Server serve --quiet``.
-            bottle.run(*args, quiet=quiet, **kwargs)
+            # Host our Bottle web application using WSGI (`docs <https://docs.cherrypy.dev/en/latest/advanced.html#host-a-foreign-wsgi-application-in-cherrypy>`__). TODO: switch to just CherryPy instead.
+            cherrypy.tree.graft(bottle.default_app(), "/")
+            cherrypy.config.update(
+                {
+                    # I found these via Google, but can't seem to find any official CherryPy docs on this.
+                    "server.socket_host": server_host,
+                    "server.socket_port": HTTP_PORT,
+                    # Per the `docs <https://docs.cherrypy.dev/en/latest/config.html#environments>`__, suppress logging and lots of other things when this is embedded in another application (like this one). See also `logging docs <https://docs.cherrypy.dev/en/latest/basics.html#disable-logging>`__.
+                    #
+                    # In the past, omitting the ``quiet`` option causes the server Bottle uses by default (Python's stdlib wsgiref) to die when emitting stdio if run with the ``CodeChat_Server start`` option (where the stdio/stderr gets disconnected after the server is started). Therefore, the ``CodeChat_Server start`` command always invokes ``CodeChat_Server serve --quiet``. I haven't tested this using cherrypy, but kept the same approach.
+                    #
+                    # However, this approach essentially turns "quiet" on for the server, regardless of the ``quiet`` command-line option.
+                    "environment": "embedded",
+                }
+            )
+            cherrypy.server.start()
         except Exception:
             # Shut down the server instead of allowing it to keep running in a broken state.
             shutdown_event.set()
             raise
 
-    server_host = "0.0.0.0" if insecure else LOCALHOST
     webserver_thread = threading.Thread(
         target=webserver_launcher,
-        kwargs=dict(host=server_host, port=HTTP_PORT),
         name="Webserver",
         daemon=True,
     )
