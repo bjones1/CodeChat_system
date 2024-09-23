@@ -279,7 +279,8 @@ def server_static(filepath):
 @bottle.route("/client")
 def client_html() -> str:
     return bottle.template(
-        str(Path(__file__).parent / "CodeChat_Client/templates/CodeChat_client.html"),
+        "CodeChat_client.html",
+        template_lookup=[str(Path(__file__).parent / "CodeChat_Client/templates")],
         client_id=bottle.request.query.id,
         WEBSOCKET_PORT=WEBSOCKET_PORT,
     )
