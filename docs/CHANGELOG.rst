@@ -15,6 +15,11 @@ Change Log
 
     -   No changes.
 
+-   0.2.24, 11-Nov-2024:
+
+    -   Fix [backwards-incompatible change in websockets](https://websockets.readthedocs.io/en/stable/project/changelog.html#id14).
+    -   Misc mypy fixes.
+
 -   0.2.23, 23-Sep-2024:
 
     -   Fix a bottle.py deprecation that causes a Python 3.12 exception.
