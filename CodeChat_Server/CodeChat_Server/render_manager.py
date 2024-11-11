@@ -283,7 +283,7 @@ class RenderManager:
 
     # Communicate with a CodeChat Client via a websocket.
     async def websocket_handler(
-        self, websocket: websockets.server.WebSocketServerProtocol, path: str
+        self, websocket: websockets.server.WebSocketServerProtocol
     ):
         # First, read this client's ID.
         try:
