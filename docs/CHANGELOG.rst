@@ -15,6 +15,10 @@ Change Log
 
     -   No changes.
 
+-   0.2.23, 23-Sep-2024:
+
+    -   Fix a bottle.py deprecation that causes a Python 3.12 exception.
+
 -   0.2.22, 8-May-2024:
 
     -   Use the `CherryPy <https://docs.cherrypy.dev/en/latest/index.html>`_ web framework, to work around CodeSpaces problems.
