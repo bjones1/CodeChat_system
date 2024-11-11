@@ -46,8 +46,7 @@ import xml.dom.minidom
 # Third-party imports
 # -------------------
 from lxml import etree as ElementTree
-import websockets
-import websockets.server
+import websockets.asyncio.server
 
 # Local imports
 # -------------
@@ -283,7 +282,7 @@ class RenderManager:
 
     # Communicate with a CodeChat Client via a websocket.
     async def websocket_handler(
-        self, websocket: websockets.server.WebSocketServerProtocol
+        self, websocket: websockets.asyncio.server.ServerConnection
     ):
         # First, read this client's ID.
         try:
@@ -363,7 +362,7 @@ class RenderManager:
 
     # _`read_websocket_handler`: this responds to `messages sent by the CodeChat Client <messages sent by the CodeChat Client>`.
     async def read_websocket_handler(
-        self, websocket: websockets.server.WebSocketServerProtocol, id_: int
+        self, websocket: websockets.asyncio.server.ServerConnection, id_: int
     ):
         while not self._is_shutdown:
             try:

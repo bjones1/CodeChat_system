@@ -86,8 +86,8 @@ class WatcherClient:
     def __init__(
         self,
         directories: Sequence[Path],
-        patterns: Sequence[str],
-        ignore_patterns: Sequence[str],
+        patterns: List[str],
+        ignore_patterns: List[str],
     ):
         self.observer = Observer()
         self.thrift_client = get_client()
@@ -108,12 +108,14 @@ class WatcherClient:
         self.client_id = ret.id
 
         # See the `docs <https://watchdog.readthedocs.io/en/latest/api.html#watchdog.events.PatternMatchingEventHandler>`__. Rather than derive a separate class, just add a method to this instance.
-        self.event_handler = PatternMatchingEventHandler(patterns, ignore_patterns)
+        self.event_handler = PatternMatchingEventHandler(
+            patterns=patterns, ignore_patterns=ignore_patterns
+        )
         self.event_handler.on_any_event = self.on_any_event  # type: ignore
 
         for pathname in set(directories):
             # See the `docs <https://watchdog.readthedocs.io/en/latest/api.html#watchdog.observers.api.BaseObserver.schedule>`__.
-            self.observer.schedule(self.event_handler, pathname, recursive=True)
+            self.observer.schedule(self.event_handler, str(pathname), recursive=True)
         self.observer.start()
         typer.echo(
             f"Watcher started, monitoring the path(s) {directories} containing patterns {patterns} but ignoring {ignore_patterns}.",
@@ -122,8 +124,8 @@ class WatcherClient:
     # See the `docs <https://watchdog.readthedocs.io/en/latest/api.html#watchdog.events.FileSystemEventHandler.on_any_event>`__.
     def on_any_event(self, event: FileSystemEvent) -> None:
         if not event.is_directory:
-            typer.echo(event, event.src_path, err=True)
-            src_path = Path(event.src_path).absolute()
+            typer.echo(f"{event}, {str(event.src_path)}", err=True)
+            src_path = Path(str(event.src_path)).absolute()
             with open(src_path, encoding="utf-8", errors="backslashreplace") as f:
                 try:
                     ret = self.thrift_client.start_render(
